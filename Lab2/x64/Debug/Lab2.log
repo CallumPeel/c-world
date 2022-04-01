@@ -1,0 +1,6 @@
+﻿  Lab5.c
+C:\UNI\Current\ICT289 - Computer Graphics Principles and Programming\Lab5_ex3\Lab2\Lab5.c(123,19): warning C4305: '-=': truncation from 'double' to 'float'
+C:\UNI\Current\ICT289 - Computer Graphics Principles and Programming\Lab5_ex3\Lab2\Lab5.c(128,19): warning C4305: '+=': truncation from 'double' to 'float'
+C:\UNI\Current\ICT289 - Computer Graphics Principles and Programming\Lab5_ex3\Lab2\Lab5.c(160,29): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\UNI\Current\ICT289 - Computer Graphics Principles and Programming\Lab5_ex3\Lab2\Lab5.c(161,30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  Lab2.vcxproj -> C:\UNI\Current\ICT289 - Computer Graphics Principles and Programming\Lab5_ex3\x64\Debug\Lab5.exe
