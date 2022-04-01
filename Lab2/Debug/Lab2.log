@@ -1,0 +1,14 @@
+﻿  Lab2.c
+C:\UNI\Current\ICT289 - Computer Graphics Principles and Programming\Lab2\Lab2\Lab2\Lab2.c(26,1): warning C4305: 'initializing': truncation from 'double' to 'GLfloat'
+C:\UNI\Current\ICT289 - Computer Graphics Principles and Programming\Lab2\Lab2\Lab2\Lab2.c(53,1): warning C4305: 'initializing': truncation from 'double' to 'GLfloat'
+C:\UNI\Current\ICT289 - Computer Graphics Principles and Programming\Lab2\Lab2\Lab2\Lab2.c(54,1): warning C4305: 'initializing': truncation from 'double' to 'GLfloat'
+C:\UNI\Current\ICT289 - Computer Graphics Principles and Programming\Lab2\Lab2\Lab2\Lab2.c(55,1): warning C4305: 'initializing': truncation from 'double' to 'GLfloat'
+C:\UNI\Current\ICT289 - Computer Graphics Principles and Programming\Lab2\Lab2\Lab2\Lab2.c(87,1): warning C4305: 'initializing': truncation from 'double' to 'GLfloat'
+C:\UNI\Current\ICT289 - Computer Graphics Principles and Programming\Lab2\Lab2\Lab2\Lab2.c(88,1): warning C4305: 'initializing': truncation from 'double' to 'GLfloat'
+C:\UNI\Current\ICT289 - Computer Graphics Principles and Programming\Lab2\Lab2\Lab2\Lab2.c(89,1): warning C4305: 'initializing': truncation from 'double' to 'GLfloat'
+C:\UNI\Current\ICT289 - Computer Graphics Principles and Programming\Lab2\Lab2\Lab2\Lab2.c(90,1): warning C4305: 'initializing': truncation from 'double' to 'GLfloat'
+C:\UNI\Current\ICT289 - Computer Graphics Principles and Programming\Lab2\Lab2\Lab2\Lab2.c(96,1): warning C4305: 'initializing': truncation from 'double' to 'GLfloat'
+C:\UNI\Current\ICT289 - Computer Graphics Principles and Programming\Lab2\Lab2\Lab2\Lab2.c(97,1): warning C4305: 'initializing': truncation from 'double' to 'GLfloat'
+C:\UNI\Current\ICT289 - Computer Graphics Principles and Programming\Lab2\Lab2\Lab2\Lab2.c(98,1): warning C4305: 'initializing': truncation from 'double' to 'GLfloat'
+C:\UNI\Current\ICT289 - Computer Graphics Principles and Programming\Lab2\Lab2\Lab2\Lab2.c(99,1): warning C4305: 'initializing': truncation from 'double' to 'GLfloat'
+  Lab2.vcxproj -> C:\UNI\Current\ICT289 - Computer Graphics Principles and Programming\Lab2\Lab2\Debug\Lab2.exe
