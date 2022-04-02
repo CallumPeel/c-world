@@ -4,9 +4,9 @@
 float deltaAngle = 0.0f;
 
 static float viewer[] = {
-	0.0, 1.0, 1.0, // initial camera location
-	0.0, 1.0, 0.0, // initial look at point
-	0.0, 2.0, 0.0  // initial  upvector
+	0.0, 0.0, 1.0, // initial camera location
+	0.0, 0.0, 0.0, // initial look at point
+	0.0, 1.0, 0.0  // initial  upvector
 };
 
 enum {
@@ -89,15 +89,6 @@ void mydisplay(void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	//gluLookAt(
-	//	camx,			camy,			camz,			// initial camera location
-	//	camx + camlx,	camy + camly,	camz + camlz,	// initial look at point
-	//	0.0f,			1.0f,			0.0f			// initial  upvector
-	//);
-	// 
-	//viewer[0] = camx;			viewer[1] = camy;			viewer[2] = camz;
-	//viewer[3] = camx + camlx;	viewer[4] = camy + camly;	viewer[5] = camz + camlz;
-	//viewer[6] = 0.0f;			viewer[7] = 1.0f;			viewer[8] = 0.0f;
 	gluLookAt(
 		viewer[0], viewer[1], viewer[2],      // eye location
 		viewer[3], viewer[4], viewer[5],      // looking at
@@ -107,9 +98,12 @@ void mydisplay(void) {
 	drawOrigin();
 	glutSwapBuffers();
 	glFlush();
-	
 }
 
+//gluLookAt(
+//	camx,			camy,			camz,			// initial camera location
+//	camx + camlx,	camy + camly,	camz + camlz,	// initial look at point
+//	0.0f,			1.0f,			0.0f			// initial  upvector
 void keys(unsigned char key, int x, int y)
 {
 
@@ -117,11 +111,13 @@ void keys(unsigned char key, int x, int y)
 	// Strafe left	
 	case 'a':
 		viewer[0] -= 0.2;
+		viewer[3] -= 0.2;
 		break;
 	
 	// Strafe left
 	case 'd':
 		viewer[0] += 0.2;
+		viewer[3] += +0.2;
 		break;
 	case 'w':
 		//THIS NEEDS FIXING
@@ -138,11 +134,6 @@ void keys(unsigned char key, int x, int y)
 	case 'c':
 		viewer[4] -= 1;
 		break;
-	//case '1':
-	//	camx = 0;
-	//	camy = 0;
-	//	camz = -1;
-	//	break;
 	}
 
 	if ((key == 'q') || (key == 'Q'))
@@ -151,6 +142,9 @@ void keys(unsigned char key, int x, int y)
 	glutPostRedisplay();
 }
 
+//viewer[0] = camx;			viewer[1] = camy;			viewer[2] = camz;
+//viewer[3] = camx + camlx;	viewer[4] = camy + camly;	viewer[5] = camz + camlz;
+//viewer[6] = 0.0f;			viewer[7] = 1.0f;			viewer[8] = 0.0f;
 void mouseMove(int x, int y) {
 	deltaAngle = x * 0.001f;
 	// update camera's direction
