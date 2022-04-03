@@ -50,6 +50,7 @@ Model getModel(FILE* file)
 
     scaleModel(model);
     translateModel(model);
+    model.boundingBox = getBoundingBox(model);
     return model;
 }
 
@@ -180,6 +181,7 @@ void translateModel(Model model) {
         model.vertices[i].y = model.vertices[i].y - c.y;
         model.vertices[i].z = model.vertices[i].z - c.z;
     }
+    model.boundingBox = getBoundingBox(model);
 }
 
 void scaleModel(Model model) {
@@ -189,6 +191,18 @@ void scaleModel(Model model) {
         model.vertices[i].y = model.vertices[i].y * ratio;
         model.vertices[i].z = model.vertices[i].z * ratio;
     }
+    model.boundingBox = getBoundingBox(model);
+}
+
+void drawBoundingBox(BoundingBox box) {
+    glColor3f(1.0, 0.0, 0.0);         /* draw in red */
+    glLineWidth(2.0);                 /* draw using lines 2 pixels wide */
+    glBegin(GL_POLYGON);
+    glVertex3f(box.minX, box.minY, box.minZ);
+    glVertex3f(box.minX, box.maxY, box.minZ);
+    glVertex3f(box.minX, box.maxY, box.maxZ);
+    glVertex3f(box.minX, box.minY, box.maxZ);
+    glEnd();
 }
 
 void drawModel(Model model) {
@@ -220,29 +234,24 @@ void translateModelX(Model model, float x, float y, float z) {
         model.vertices[i].y = model.vertices[i].y + y;
         model.vertices[i].z = model.vertices[i].z + z;
     }
+    model.boundingBox = getBoundingBox(model);
 }
 
 BoundingBox getBoundingBox(Model model) {
 
     BoundingBox box = { 0,0,0,0,0,0 };
-
+    Point3D temp;
     for (int i = 0; i < model.NVerts; i++) {
-        Point3D temp = model.vertices[i];
+        temp = model.vertices[i];
         if (temp.x < box.minX) box.minX = temp.x;
         if (temp.x > box.maxX) box.maxX = temp.x;
+
         if (temp.y > box.maxY) box.maxY = temp.y;
         if (temp.y < box.minY) box.minY = temp.y;
+        
         if (temp.z < box.minZ) box.minZ = temp.z;
         if (temp.z > box.maxZ) box.maxZ = temp.z;
     }
-    glColor3f(1.0, 0.0, 0.0);         /* draw in red */
-    glLineWidth(2.0);                 /* draw using lines 2 pixels wide */
-    glBegin(GL_POLYGON);
-    glVertex3f(box.minX, box.minY, box.minZ);
-    glVertex3f(box.minX, box.maxY, box.minZ);
-    glVertex3f(box.minX, box.maxY, box.maxZ);
-    glVertex3f(box.minX, box.minY, box.maxZ);
-    glEnd();
-    printf("minX = %.2f   maxX = %.2f\n", box.minX, box.maxX);
+    //printf("minX = %.2f   maxX = %.2f\n", box.minX, box.maxX);
     return box;
 }

@@ -12,16 +12,17 @@ typedef struct Face{
     int i, j, k;
 }Face;
 
+typedef struct BoundingBox {
+    GLfloat minX, maxX, minY, maxY, minZ, maxZ;
+}BoundingBox;
+
 typedef struct Model {
     int NVerts, NFaces, NEdges;
     Point3D* vertices;
     Face* faces;
     modelInfo* edges;
+    BoundingBox boundingBox;
 }Model;
-
-typedef struct BoundingBox {
-    GLfloat minX, maxX, minY, maxY, minZ, maxZ;
-}BoundingBox;
 
 bool isOFF(FILE* file);
 
@@ -60,3 +61,5 @@ void drawModel(Model model);
 void translateModelX(Model model, float x);
 
 BoundingBox getBoundingBox(Model model);
+
+void drawBoundingBox(BoundingBox box);

@@ -5,7 +5,6 @@ Model model2;
 // for mouse things
 float deltaAngle = 0.0f;
 
-
 static float viewer[] = {
 	0.0, 1.0, 15.0, // initial camera location
 	0.0, 0.0, 0.0, // initial look at point
@@ -105,7 +104,7 @@ void mydisplay(void) {
 		drawOrigin();
 		glTranslated(-5, 1, 0);
 		drawModel(model1);
-		BoundingBox test = getBoundingBox(model1);
+		drawBoundingBox(model1.boundingBox);
 	glPopMatrix();
 		glRotated(180, 0, 1, 0);
 		glTranslated(-5, 1, 0);

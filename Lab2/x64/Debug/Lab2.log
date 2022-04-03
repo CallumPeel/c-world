@@ -1,15 +1,6 @@
-﻿  Lab5.c
-C:\Repositories\c-world\Lab2\Lab5.c(108,15): warning C4101: 'test': unreferenced local variable
-C:\Repositories\c-world\Lab2\Lab5.c(152,30): warning C4305: 'function': truncation from 'double' to 'float'
-C:\Repositories\c-world\Lab2\Lab5.c(152,32): warning C4020: 'translateModelX': too many actual parameters
-C:\Repositories\c-world\Lab2\Lab5.c(155,30): warning C4305: 'function': truncation from 'double' to 'float'
-C:\Repositories\c-world\Lab2\Lab5.c(155,32): warning C4020: 'translateModelX': too many actual parameters
-C:\Repositories\c-world\Lab2\Lab5.c(168,29): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Repositories\c-world\Lab2\Lab5.c(169,30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  off.c
-C:\Repositories\c-world\Lab2\off.c(74,29): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
-C:\Repositories\c-world\Lab2\off.c(168,61): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Repositories\c-world\Lab2\off.c(186,1): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Repositories\c-world\Lab2\off.c(217,62): warning C4029: declared formal parameter list different from definition
-  Generating Code...
+﻿  off.c
+C:\Repositories\c-world\Lab2\off.c(75,29): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+C:\Repositories\c-world\Lab2\off.c(169,61): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Repositories\c-world\Lab2\off.c(188,1): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Repositories\c-world\Lab2\off.c(231,62): warning C4029: declared formal parameter list different from definition
   Lab2.vcxproj -> C:\Repositories\c-world\x64\Debug\Lab5.exe
