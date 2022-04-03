@@ -50,3 +50,7 @@ float getRadiusOfModel(Model model);
 void translateModel(Model model);
 
 void scaleModel(Model model);
+
+void drawModel(Model model);
+
+void translateModelX(Model model, float x);

@@ -1,5 +1,8 @@
 ﻿  Lab5.c
-C:\Repositories\c-world\Lab2\Lab5.c(103,12): warning C4013: 'drawModel' undefined; assuming extern returning int
-C:\Repositories\c-world\Lab2\Lab5.c(156,29): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Repositories\c-world\Lab2\Lab5.c(157,30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Repositories\c-world\Lab2\Lab5.c(151,30): warning C4305: 'function': truncation from 'double' to 'float'
+C:\Repositories\c-world\Lab2\Lab5.c(151,32): warning C4020: 'translateModelX': too many actual parameters
+C:\Repositories\c-world\Lab2\Lab5.c(154,30): warning C4305: 'function': truncation from 'double' to 'float'
+C:\Repositories\c-world\Lab2\Lab5.c(154,32): warning C4020: 'translateModelX': too many actual parameters
+C:\Repositories\c-world\Lab2\Lab5.c(167,29): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Repositories\c-world\Lab2\Lab5.c(168,30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   Lab2.vcxproj -> C:\Repositories\c-world\x64\Debug\Lab5.exe

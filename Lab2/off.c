@@ -214,3 +214,11 @@ void drawModel(Model model) {
         glEnd();
     }
 }
+
+void translateModelX(Model model, float x, float y, float z) {
+    for (int i = 0; i < model.NVerts; i++) {
+        model.vertices[i].x = model.vertices[i].x + x;
+        model.vertices[i].y = model.vertices[i].y + y;
+        model.vertices[i].z = model.vertices[i].z + z;
+    }
+}

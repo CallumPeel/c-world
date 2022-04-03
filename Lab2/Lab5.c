@@ -1,8 +1,10 @@
 #include "off.h"
 
-Model model;
+Model model1;
+Model model2;
 // for mouse things
 float deltaAngle = 0.0f;
+
 
 static float viewer[] = {
 	0.0, 1.0, 15.0, // initial camera location
@@ -45,7 +47,8 @@ void drawOrigin() {
 
 void init(void) {
 	const char* fileName = "bone.off";
-	model = readOFFFile(fileName);
+	model1 = readOFFFile(fileName);
+	model2 = readOFFFile(fileName);
 	glClearColor(0.0, 0.5, 0.5, 0.0); /* draw on white background */
 	glColor3f(1.0, 0.0, 0.0);         /* draw in red */
 	glLineWidth(2.0);                 /* draw using lines 2 pixels wide */
@@ -97,14 +100,15 @@ void mydisplay(void) {
 		viewer[3], viewer[4], viewer[5],      // looking at
 		viewer[6], viewer[7], viewer[8]       // up vector
 	);
+
 	glPushMatrix();
 		drawOrigin();
 		glTranslated(-5, 1, 0);
-		drawModel(model);
+		drawModel(model1);
 	glPopMatrix();
 		glRotated(180, 0, 1, 0);
 		glTranslated(-5, 1, 0);
-		drawModel(model);
+		drawModel(model2);
 	glPushMatrix();
 
 	glPopMatrix();
@@ -112,38 +116,44 @@ void mydisplay(void) {
 	glFlush();
 }
 
-//gluLookAt(
-//	camx,			camy,			camz,			// initial camera location
-//	camx + camlx,	camy + camly,	camz + camlz,	// initial look at point
-//	0.0f,			1.0f,			0.0f			// initial  upvector
 void keys(unsigned char key, int x, int y)
 {
 	float speed = 0.5;
 	switch (key) {
-	// Strafe left	
+		// Strafe left	
 	case 'a':
 		viewer[0] -= speed;
 		viewer[3] -= speed;
 		break;
 
-	// Strafe left
+		// Strafe right
 	case 'd':
 		viewer[0] += speed;
 		viewer[3] += speed;
 		break;
+		// forward
 	case 'w':
 		viewer[2] -= speed;
 		break;
+		// back
 	case 's':
 		viewer[2] += speed;
 		break;
+		// up
 	case 'e':
 		viewer[4] += 1;
 		break;
+		// down
 	case 'c':
 		viewer[4] -= 1;
 		break;
-	}
+	case 'g':
+		translateModelX(model1, 0.2, 0, 0);
+		break;
+	case 'h':
+		translateModelX(model2, 0.2, 0, 0);
+		break;
+}
 
 	if ((key == 'q') || (key == 'Q'))
 		exit(0);
@@ -152,7 +162,8 @@ void keys(unsigned char key, int x, int y)
 }
 
 void mouseMove(int x, int y) {
-	deltaAngle = x * 0.003f;
+	x = x - 250;
+	deltaAngle = x * 0.005f;
 	viewer[3] = sin(deltaAngle);
 	viewer[5] = -cos(deltaAngle);
 	glutPostRedisplay();
