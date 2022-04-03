@@ -1,8 +1,4 @@
 ﻿  Lab5.c
-C:\Repositories\c-world\Lab2\Lab5.c(113,19): warning C4305: '-=': truncation from 'double' to 'float'
-C:\Repositories\c-world\Lab2\Lab5.c(114,19): warning C4305: '-=': truncation from 'double' to 'float'
-C:\Repositories\c-world\Lab2\Lab5.c(119,19): warning C4305: '+=': truncation from 'double' to 'float'
-C:\Repositories\c-world\Lab2\Lab5.c(120,20): warning C4305: '+=': truncation from 'double' to 'float'
 C:\Repositories\c-world\Lab2\Lab5.c(147,29): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 C:\Repositories\c-world\Lab2\Lab5.c(148,30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   Lab2.vcxproj -> C:\Repositories\c-world\x64\Debug\Lab5.exe
