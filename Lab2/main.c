@@ -2,12 +2,9 @@
 #include <gl/freeglut.h>
 #include "Lab5.h"
 
-Model model;
-
 int main(int argc, char** argv)
 {
-	const char* fileName = "bone_normalized_aligned.off";
-	model = readOFFFile(fileName);
+	
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowSize(500, 500);

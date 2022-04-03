@@ -1,10 +1,11 @@
 #include "off.h"
 
+Model model;
 // for mouse things
 float deltaAngle = 0.0f;
 
 static float viewer[] = {
-	0.0, 0.0, 5.0, // initial camera location
+	0.0, 1.0, 15.0, // initial camera location
 	0.0, 0.0, 0.0, // initial look at point
 	0.0, 1.0, 0.0  // initial  upvectorq
 };
@@ -43,7 +44,9 @@ void drawOrigin() {
 }
 
 void init(void) {
-	glClearColor(0.0, 0.0, 0.0, 0.0); /* draw on white background */
+	const char* fileName = "bone.off";
+	model = readOFFFile(fileName);
+	glClearColor(0.0, 0.5, 0.5, 0.0); /* draw on white background */
 	glColor3f(1.0, 0.0, 0.0);         /* draw in red */
 	glLineWidth(2.0);                 /* draw using lines 2 pixels wide */
 	glMatrixMode(GL_PROJECTION);
@@ -95,9 +98,15 @@ void mydisplay(void) {
 		viewer[6], viewer[7], viewer[8]       // up vector
 	);
 	glPushMatrix();
-	glTranslated(0, -1, 0);
-	glutSolidTeapot(0.5);
-	drawOrigin();
+		drawOrigin();
+		glTranslated(-5, 1, 0);
+		drawModel(model);
+	glPopMatrix();
+		glRotated(180, 0, 1, 0);
+		glTranslated(-5, 1, 0);
+		drawModel(model);
+	glPushMatrix();
+
 	glPopMatrix();
 	glutSwapBuffers();
 	glFlush();

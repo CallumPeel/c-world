@@ -191,3 +191,26 @@ void scaleModel(Model model) {
         model.vertices[i].z = model.vertices[i].z * ratio;
     }
 }
+
+void drawModel(Model model) {
+    glColor3f(0.0, 1.0, 0.0);
+    for (int i = 0; i < model.NFaces; ++i) {
+        glBegin(GL_TRIANGLES);
+        GLfloat x = { model.vertices[model.faces[i].i].x };
+        GLfloat y = { model.vertices[model.faces[i].i].y };
+        GLfloat z = { model.vertices[model.faces[i].i].z };
+        point3 p1 = { {x},{y},{z} };
+        glVertex3fv(p1);
+        GLfloat x2 = { model.vertices[model.faces[i].j].x };
+        GLfloat y2 = { model.vertices[model.faces[i].j].y };
+        GLfloat z2 = { model.vertices[model.faces[i].j].z };
+        point3 p2 = { {x2},{y2},{z2} };
+        glVertex3fv(p2);
+        GLfloat x3 = { model.vertices[model.faces[i].k].x };
+        GLfloat y3 = { model.vertices[model.faces[i].k].y };
+        GLfloat z3 = { model.vertices[model.faces[i].k].z };
+        point3 p3 = { {x3},{y3},{z3} };
+        glVertex3fv(p3);
+        glEnd();
+    }
+}
