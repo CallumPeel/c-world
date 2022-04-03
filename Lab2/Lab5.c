@@ -142,12 +142,8 @@ void keys(unsigned char key, int x, int y)
 	glutPostRedisplay();
 }
 
-//viewer[0] = camx;			viewer[1] = camy;			viewer[2] = camz;
-//viewer[3] = camx + camlx;	viewer[4] = camy + camly;	viewer[5] = camz + camlz;
-//viewer[6] = 0.0f;			viewer[7] = 1.0f;			viewer[8] = 0.0f;
 void mouseMove(int x, int y) {
 	deltaAngle = x * 0.001f;
-	// update camera's direction
 	viewer[3] = sin(deltaAngle);
 	viewer[5] = -cos(deltaAngle);
 	glutPostRedisplay();
