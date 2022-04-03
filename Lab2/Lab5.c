@@ -105,6 +105,7 @@ void mydisplay(void) {
 		drawOrigin();
 		glTranslated(-5, 1, 0);
 		drawModel(model1);
+		BoundingBox test = getBoundingBox(model1);
 	glPopMatrix();
 		glRotated(180, 0, 1, 0);
 		glTranslated(-5, 1, 0);

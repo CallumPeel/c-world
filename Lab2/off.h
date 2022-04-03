@@ -19,6 +19,10 @@ typedef struct Model {
     modelInfo* edges;
 }Model;
 
+typedef struct BoundingBox {
+    GLfloat minX, maxX, minY, maxY, minZ, maxZ;
+}BoundingBox;
+
 bool isOFF(FILE* file);
 
 Model getModel(FILE* file);
@@ -54,3 +58,5 @@ void scaleModel(Model model);
 void drawModel(Model model);
 
 void translateModelX(Model model, float x);
+
+BoundingBox getBoundingBox(Model model);
