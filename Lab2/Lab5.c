@@ -1,12 +1,13 @@
 #include "off.h"
 
+Model model;
 // for mouse things
 float deltaAngle = 0.0f;
 
 static float viewer[] = {
-	0.0, 0.0, 1.0, // initial camera location
+	0.0, 1.0, 15.0, // initial camera location
 	0.0, 0.0, 0.0, // initial look at point
-	0.0, 1.0, 0.0  // initial  upvector
+	0.0, 1.0, 0.0  // initial  upvectorq
 };
 
 enum {
@@ -43,7 +44,9 @@ void drawOrigin() {
 }
 
 void init(void) {
-	glClearColor(0.0, 0.0, 0.0, 0.0); /* draw on white background */
+	const char* fileName = "bone.off";
+	model = readOFFFile(fileName);
+	glClearColor(0.0, 0.5, 0.5, 0.0); /* draw on white background */
 	glColor3f(1.0, 0.0, 0.0);         /* draw in red */
 	glLineWidth(2.0);                 /* draw using lines 2 pixels wide */
 	glMatrixMode(GL_PROJECTION);
@@ -94,8 +97,17 @@ void mydisplay(void) {
 		viewer[3], viewer[4], viewer[5],      // looking at
 		viewer[6], viewer[7], viewer[8]       // up vector
 	);
-	glutSolidTeapot(0.5);
-	drawOrigin();
+	glPushMatrix();
+		drawOrigin();
+		glTranslated(-5, 1, 0);
+		drawModel(model);
+	glPopMatrix();
+		glRotated(180, 0, 1, 0);
+		glTranslated(-5, 1, 0);
+		drawModel(model);
+	glPushMatrix();
+
+	glPopMatrix();
 	glutSwapBuffers();
 	glFlush();
 }
@@ -106,27 +118,24 @@ void mydisplay(void) {
 //	0.0f,			1.0f,			0.0f			// initial  upvector
 void keys(unsigned char key, int x, int y)
 {
-
+	float speed = 0.5;
 	switch (key) {
 	// Strafe left	
 	case 'a':
-		viewer[0] -= 0.2;
-		viewer[3] -= 0.2;
+		viewer[0] -= speed;
+		viewer[3] -= speed;
 		break;
-	
+
 	// Strafe left
 	case 'd':
-		viewer[0] += 0.2;
-		viewer[3] += +0.2;
+		viewer[0] += speed;
+		viewer[3] += speed;
 		break;
 	case 'w':
-		//THIS NEEDS FIXING
-		viewer[0] += viewer[3];
-		viewer[2] += viewer[5];
+		viewer[2] -= speed;
 		break;
 	case 's':
-		viewer[0] -= viewer[3];
-		viewer[2] -= viewer[5];
+		viewer[2] += speed;
 		break;
 	case 'e':
 		viewer[4] += 1;
@@ -143,7 +152,7 @@ void keys(unsigned char key, int x, int y)
 }
 
 void mouseMove(int x, int y) {
-	deltaAngle = x * 0.001f;
+	deltaAngle = x * 0.003f;
 	viewer[3] = sin(deltaAngle);
 	viewer[5] = -cos(deltaAngle);
 	glutPostRedisplay();
