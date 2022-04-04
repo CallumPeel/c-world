@@ -264,21 +264,9 @@ void drawModel(Model model) {
     glColor3f(0.0, 1.0, 0.0);
     for (int i = 0; i < model.NFaces; ++i) {
         glBegin(GL_TRIANGLES);
-        GLfloat x = { model.vertices[model.faces[i].i].x };
-        GLfloat y = { model.vertices[model.faces[i].i].y };
-        GLfloat z = { model.vertices[model.faces[i].i].z };
-        point3 p1 = { {x},{y},{z} };
-        glVertex3fv(p1);
-        GLfloat x2 = { model.vertices[model.faces[i].j].x };
-        GLfloat y2 = { model.vertices[model.faces[i].j].y };
-        GLfloat z2 = { model.vertices[model.faces[i].j].z };
-        point3 p2 = { {x2},{y2},{z2} };
-        glVertex3fv(p2);
-        GLfloat x3 = { model.vertices[model.faces[i].k].x };
-        GLfloat y3 = { model.vertices[model.faces[i].k].y };
-        GLfloat z3 = { model.vertices[model.faces[i].k].z };
-        point3 p3 = { {x3},{y3},{z3} };
-        glVertex3fv(p3);
+        glVertex3f(model.vertices[model.faces[i].i].x, model.vertices[model.faces[i].i].y, model.vertices[model.faces[i].i].z);
+        glVertex3f(model.vertices[model.faces[i].j].x, model.vertices[model.faces[i].j].y, model.vertices[model.faces[i].j].z);
+        glVertex3f(model.vertices[model.faces[i].k].x, model.vertices[model.faces[i].k].y, model.vertices[model.faces[i].k].z);
         glEnd();
     }
 }
@@ -291,29 +279,23 @@ void translateModelX(Model* model, float x, float y, float z) {
     }
     model->boundingBox.minX += x;
     model->boundingBox.maxX += x;
-
     model->boundingBox.minY += y;
     model->boundingBox.maxY += y;
-    
     model->boundingBox.minZ += z;
     model->boundingBox.maxZ += z;
 }
 
 BoundingBox getBoundingBox(Model model) {
-
     BoundingBox box = { 0,0,0,0,0,0 };
     Point3D temp;
     for (int i = 0; i < model.NVerts; i++) {
         temp = model.vertices[i];
         if (temp.x < box.minX) box.minX = temp.x;
         if (temp.x > box.maxX) box.maxX = temp.x;
-
         if (temp.y > box.maxY) box.maxY = temp.y;
         if (temp.y < box.minY) box.minY = temp.y;
-        
         if (temp.z < box.minZ) box.minZ = temp.z;
         if (temp.z > box.maxZ) box.maxZ = temp.z;
     }
-    printf("minX = %.2f   maxX = %.2f\n", box.minX, box.maxX);
     return box;
 }
