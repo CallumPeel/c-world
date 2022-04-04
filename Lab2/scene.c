@@ -102,12 +102,11 @@ void mydisplay(void) {
 
 	glPushMatrix();
 		drawOrigin();
-		glTranslated(-5, 1, 0);
-		drawModel(*model1);
+		if (model1->boundingBox.maxX < model2->boundingBox.minX) {
+			drawModel(*model1);
+		}
 		drawBoundingBox(*model1);
 	glPopMatrix();
-		glRotated(180, 0, 1, 0);
-		glTranslated(-5, 1, 0);
 		drawModel(*model2);
 		drawBoundingBox(*model2);
 	glPopMatrix();
@@ -146,18 +145,24 @@ void keys(unsigned char key, int x, int y)
 	case 'c':
 		viewer[1] -= 1;
 		break;
+
+	// model movements
 	case 'g':
-		translateModelX(model1, 0.2, 0, 0);
+		translateModelX(model1, 0.02, 0, 0);
 		break;
 	case 'h':
-		translateModelX(model1, -0.2, 0, 0);
+		translateModelX(model1, -0.02, 0, 0);
 		break;
 	case 't':
-		translateModelX(model2, 0.2, 0, 0);
+		translateModelX(model2, 0.02, 0, 0);
 		break;
 	case 'y':
-		translateModelX(model2, -0.2, 0, 0);
+		translateModelX(model2, -0.02, 0, 0);
 		break;
+	case 'p':
+		printf("Model 1 max x : % f \n", model1->boundingBox.maxX);
+		printf("Model 2 min x : % f \n", model1->boundingBox.minX);
+
 }
 
 	if ((key == 'q') || (key == 'Q'))

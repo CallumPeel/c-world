@@ -1,18 +1,8 @@
-﻿  off.c
-C:\Repositories\c-world\Lab2\off.c(75,29): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
-C:\Repositories\c-world\Lab2\off.c(169,61): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Repositories\c-world\Lab2\off.c(184,29): warning C4552: '-': result of expression not used
-C:\Repositories\c-world\Lab2\off.c(185,29): warning C4552: '-': result of expression not used
-C:\Repositories\c-world\Lab2\off.c(187,29): warning C4552: '-': result of expression not used
-C:\Repositories\c-world\Lab2\off.c(188,29): warning C4552: '-': result of expression not used
-C:\Repositories\c-world\Lab2\off.c(190,29): warning C4552: '-': result of expression not used
-C:\Repositories\c-world\Lab2\off.c(191,29): warning C4552: '-': result of expression not used
-C:\Repositories\c-world\Lab2\off.c(201,29): warning C4552: '*': result of expression not used
-C:\Repositories\c-world\Lab2\off.c(202,29): warning C4552: '*': result of expression not used
-C:\Repositories\c-world\Lab2\off.c(204,29): warning C4552: '*': result of expression not used
-C:\Repositories\c-world\Lab2\off.c(205,29): warning C4552: '*': result of expression not used
-C:\Repositories\c-world\Lab2\off.c(207,29): warning C4552: '*': result of expression not used
-C:\Repositories\c-world\Lab2\off.c(208,29): warning C4552: '*': result of expression not used
-C:\Repositories\c-world\Lab2\off.c(195,1): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Repositories\c-world\Lab2\off.c(213,20): warning C4305: 'function': truncation from 'double' to 'GLfloat'
+﻿  scene.c
+C:\Repositories\c-world\Lab2\scene.c(154,31): warning C4305: 'function': truncation from 'double' to 'float'
+C:\Repositories\c-world\Lab2\scene.c(157,32): warning C4305: 'function': truncation from 'double' to 'float'
+C:\Repositories\c-world\Lab2\scene.c(160,31): warning C4305: 'function': truncation from 'double' to 'float'
+C:\Repositories\c-world\Lab2\scene.c(163,32): warning C4305: 'function': truncation from 'double' to 'float'
+C:\Repositories\c-world\Lab2\scene.c(180,29): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Repositories\c-world\Lab2\scene.c(181,30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   Lab2.vcxproj -> C:\Repositories\c-world\x64\Debug\Lab5.exe
