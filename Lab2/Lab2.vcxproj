@@ -142,7 +142,7 @@
   <ItemGroup>
     <ClCompile Include="example.c" />
     <ClCompile Include="fileHandler.c" />
-    <ClCompile Include="Lab5.c" />
+    <ClCompile Include="scene.c" />
     <ClCompile Include="off.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="userInput.c" />
@@ -151,7 +151,7 @@
   <ItemGroup>
     <ClInclude Include="example.h" />
     <ClInclude Include="fileHandler.h" />
-    <ClInclude Include="Lab5.h" />
+    <ClInclude Include="scene.h" />
     <ClInclude Include="off.h" />
     <ClInclude Include="userInput.h" />
     <ClInclude Include="vector.h" />

@@ -208,15 +208,55 @@ void scaleModel(Model* model) {
     model->boundingBox.maxZ * ratio;
 }
 
-// Bounding box will be the same size always?
 void drawBoundingBox(Model model) {
-    glColor3f(1.0, 0.0, 0.0);         /* draw in red */
-    glLineWidth(2.0);                 /* draw using lines 2 pixels wide */
-    glBegin(GL_POLYGON);
+    glLineWidth(0.1);
+    // Front Face
+    glColor3f(0.0, 0.0, 1.0);
+    glBegin(GL_LINE_LOOP);
+    glVertex3f(model.boundingBox.minX, model.boundingBox.maxY, model.boundingBox.minZ);
     glVertex3f(model.boundingBox.minX, model.boundingBox.minY, model.boundingBox.minZ);
+    glVertex3f(model.boundingBox.maxX, model.boundingBox.minY, model.boundingBox.minZ);
+    glVertex3f(model.boundingBox.maxX, model.boundingBox.maxY, model.boundingBox.minZ);
+    glEnd();
+    // Top Face
+    glBegin(GL_LINE_LOOP);
+    glColor3f(1.0, 1.0, 1.0);
     glVertex3f(model.boundingBox.minX, model.boundingBox.maxY, model.boundingBox.minZ);
     glVertex3f(model.boundingBox.minX, model.boundingBox.maxY, model.boundingBox.maxZ);
+    glVertex3f(model.boundingBox.maxX, model.boundingBox.maxY, model.boundingBox.maxZ);
+    glVertex3f(model.boundingBox.maxX, model.boundingBox.maxY, model.boundingBox.minZ);
+    glEnd();
+    // Bottom Face
+    glColor3f(0.0, 0.0, 0.0);
+    glBegin(GL_LINE_LOOP);
     glVertex3f(model.boundingBox.minX, model.boundingBox.minY, model.boundingBox.maxZ);
+    glVertex3f(model.boundingBox.minX, model.boundingBox.minY, model.boundingBox.minZ);
+    glVertex3f(model.boundingBox.maxX, model.boundingBox.minY, model.boundingBox.minZ);
+    glVertex3f(model.boundingBox.maxX, model.boundingBox.minY, model.boundingBox.maxZ);
+    glEnd();
+    // Left Face
+    glColor3f(1.0, 0.0, 0.0);
+    glBegin(GL_LINE_LOOP);
+    glVertex3f(model.boundingBox.minX, model.boundingBox.maxY, model.boundingBox.minZ);
+    glVertex3f(model.boundingBox.minX, model.boundingBox.minY, model.boundingBox.minZ);
+    glVertex3f(model.boundingBox.minX, model.boundingBox.minY, model.boundingBox.maxZ);
+    glVertex3f(model.boundingBox.minX, model.boundingBox.maxY, model.boundingBox.maxZ);
+    glEnd();
+    // Right Face
+    glColor3f(0.0, 1.0, 0.0);
+    glBegin(GL_LINE_LOOP);
+    glVertex3f(model.boundingBox.maxX, model.boundingBox.maxY, model.boundingBox.minZ);
+    glVertex3f(model.boundingBox.maxX, model.boundingBox.minY, model.boundingBox.minZ);
+    glVertex3f(model.boundingBox.maxX, model.boundingBox.minY, model.boundingBox.maxZ);
+    glVertex3f(model.boundingBox.maxX, model.boundingBox.maxY, model.boundingBox.maxZ);
+    glEnd();
+    // Back Face
+    glColor3f(1.0, 1.0, 0.0);
+    glBegin(GL_LINE_LOOP);
+    glVertex3f(model.boundingBox.maxX, model.boundingBox.maxY, model.boundingBox.maxZ);
+    glVertex3f(model.boundingBox.maxX, model.boundingBox.minY, model.boundingBox.maxZ);
+    glVertex3f(model.boundingBox.minX, model.boundingBox.minY, model.boundingBox.maxZ);
+    glVertex3f(model.boundingBox.minX, model.boundingBox.maxY, model.boundingBox.maxZ);
     glEnd();
 }
 
@@ -260,9 +300,6 @@ void translateModelX(Model* model, float x, float y, float z) {
 }
 
 BoundingBox getBoundingBox(Model model) {
-    // if boundingbox is pushed past x=0 then it will never be less than that
-    // change to floats that are initialized at the end?
-    // itnitial value fuck with this logic
 
     BoundingBox box = { 0,0,0,0,0,0 };
     Point3D temp;

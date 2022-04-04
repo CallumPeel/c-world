@@ -106,12 +106,10 @@ void mydisplay(void) {
 		drawModel(*model1);
 		drawBoundingBox(*model1);
 	glPopMatrix();
-
 		glRotated(180, 0, 1, 0);
 		glTranslated(-5, 1, 0);
 		drawModel(*model2);
-	glPushMatrix();
-
+		drawBoundingBox(*model2);
 	glPopMatrix();
 	glutSwapBuffers();
 	glFlush();
@@ -142,17 +140,23 @@ void keys(unsigned char key, int x, int y)
 		break;
 		// up
 	case 'e':
-		viewer[4] += 1;
+		viewer[1] += 1;
 		break;
 		// down
 	case 'c':
-		viewer[4] -= 1;
+		viewer[1] -= 1;
 		break;
 	case 'g':
 		translateModelX(model1, 0.2, 0, 0);
 		break;
 	case 'h':
+		translateModelX(model1, -0.2, 0, 0);
+		break;
+	case 't':
 		translateModelX(model2, 0.2, 0, 0);
+		break;
+	case 'y':
+		translateModelX(model2, -0.2, 0, 0);
 		break;
 }
 
@@ -169,3 +173,4 @@ void mouseMove(int x, int y) {
 	viewer[5] = -cos(deltaAngle);
 	glutPostRedisplay();
 }
+

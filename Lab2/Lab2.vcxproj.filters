@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Lab5.c">
+    <ClCompile Include="scene.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="example.c">
@@ -53,7 +53,7 @@
     <ClInclude Include="vector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Lab5.h">
+    <ClInclude Include="scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
