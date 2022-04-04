@@ -26,7 +26,7 @@ typedef struct Model {
 
 bool isOFF(FILE* file);
 
-Model getModel(FILE* file);
+Model* getModel(FILE* file);
 
 Normal getNormalFromFace(Model model,Face face);
 
@@ -34,7 +34,7 @@ Normal getNormalFromTriangle(Point3D i, Point3D j, Point3D k);
 
 float getArea(Model model, Face face);
 
-Model readOFFFile(const char* fileName);
+Model* readOFFFile(const char* fileName);
 
 void printVertices(Model model);
 
@@ -52,14 +52,14 @@ Point3D getCenterOfMass(Model model);
 
 float getRadiusOfModel(Model model);
 
-void translateModel(Model model);
+void translateModel(Model* model);
 
-void scaleModel(Model model);
+void scaleModel(Model* model);
 
 void drawModel(Model model);
 
-void translateModelX(Model model, float x);
+void translateModelX(Model* model, float x, float y, float z);
 
 BoundingBox getBoundingBox(Model model);
 
-void drawBoundingBox(BoundingBox box);
+void drawBoundingBox(Model model);

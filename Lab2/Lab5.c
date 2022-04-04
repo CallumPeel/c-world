@@ -1,7 +1,7 @@
 #include "off.h"
 
-Model model1;
-Model model2;
+Model* model1;
+Model* model2;
 // for mouse things
 float deltaAngle = 0.0f;
 
@@ -103,12 +103,13 @@ void mydisplay(void) {
 	glPushMatrix();
 		drawOrigin();
 		glTranslated(-5, 1, 0);
-		drawModel(model1);
-		drawBoundingBox(model1.boundingBox);
+		drawModel(*model1);
+		drawBoundingBox(*model1);
 	glPopMatrix();
+
 		glRotated(180, 0, 1, 0);
 		glTranslated(-5, 1, 0);
-		drawModel(model2);
+		drawModel(*model2);
 	glPushMatrix();
 
 	glPopMatrix();
