@@ -18,12 +18,12 @@ void drawOrigin() {
 	point3 origin[4] =
 	{
 		{0,0,0},
-		{2.5,0,0},
-		{0,2.5,0},
-		{0,0,2.5}
+		{0.2,0,0},
+		{0,0.2,0},
+		{0,0,0.2}
 	};
 	glColor3f(1.0, 0.0, 0.0);
-	glLineWidth(5.0);
+	glLineWidth(2.0);
 	glBegin(GL_LINE_LOOP);
 	glVertex3fv(origin[0]);
 	glVertex3fv(origin[1]);
@@ -47,6 +47,8 @@ void init(void) {
 	const char* fileName = "bone.off";
 	model1 = readOFFFile(fileName);
 	model2 = readOFFFile(fileName);
+	translateModelX(model1, -0.8, 0, 0);
+	translateModelX(model2, 0.8, 0, 0);
 	glClearColor(0.0, 0.5, 0.5, 0.0);
 	glColor3f(1.0, 0.0, 0.0);
 	glLineWidth(2.0);
@@ -101,15 +103,17 @@ void scene(void) {
 		viewer[3], viewer[4], viewer[5],
 		viewer[6], viewer[7], viewer[8]
 	);
-
 	glPushMatrix();
-		drawOrigin();
+		drawOrigin(); 
+		glColor3f(0.0, 0.9, 0.0);
 		if (!isColliding()) {
 			drawModel(*model1);
+			drawModel(*model2);
+		}
+		else {
+			glColor3f(1.0, 0.0, 0.0);
 		}
 		drawBoundingBox(*model1);
-	glPopMatrix();
-		drawModel(*model2);
 		drawBoundingBox(*model2);
 	glPopMatrix();
 	glutSwapBuffers();
@@ -165,11 +169,16 @@ void keys(unsigned char key, int x, int y)
 	case 'y':
 		translateModelX(model1, 0, -0.03, 0);
 		break;
+	case 'b':
+		translateModelX(model1, 0, 0, 0.03);
+		break;
+		// Down
+	case 'n':
+		translateModelX(model1, 0, 0, -0.03);
+		break;
 }
-
 	if ((key == 'q') || (key == 'Q'))
 		exit(0);
-
 	glutPostRedisplay();
 }
 
@@ -180,4 +189,3 @@ void mouseMove(int x, int y) {
 	viewer[5] = -cos(deltaAngle);
 	glutPostRedisplay();
 }
-

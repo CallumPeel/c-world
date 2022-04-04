@@ -160,14 +160,11 @@ float getRadiusOfModel(Model model) {
     float rad2 = 0.0;
     float x, y, z;
     Point3D c = getCenterOfMass(model);
-
     for (int i = 0; i < model.NVerts; ++i) {
         x = model.vertices[i].x - c.x;
         y = model.vertices[i].y - c.y;
         z = model.vertices[i].z - c.z;
-
         rad2 = sqrt(pow(x, 2.0) + pow(y, 2.0) + pow(z, 2.0));
-
         if (rad1 < rad2)
             rad1 = rad2;
     }
@@ -183,10 +180,8 @@ void translateModel(Model* model) {
     }
     model->boundingBox.minX - c.x;
     model->boundingBox.maxX - c.x;
-
     model->boundingBox.minY - c.x;
     model->boundingBox.maxY - c.x;
-
     model->boundingBox.minZ - c.x;
     model->boundingBox.maxZ - c.x;
 }
@@ -199,11 +194,9 @@ void scaleModel(Model* model) {
         model->vertices[i].z = model->vertices[i].z * ratio;
     }
     model->boundingBox.minX * ratio;
-    model->boundingBox.maxX * ratio;
-                 
+    model->boundingBox.maxX * ratio; 
     model->boundingBox.minY * ratio;
     model->boundingBox.maxY * ratio;
-                 
     model->boundingBox.minZ * ratio;
     model->boundingBox.maxZ * ratio;
 }
@@ -211,7 +204,6 @@ void scaleModel(Model* model) {
 void drawBoundingBox(Model model) {
     glLineWidth(0.1);
     // Front Face
-    glColor3f(0.0, 0.0, 1.0);
     glBegin(GL_LINE_LOOP);
     glVertex3f(model.boundingBox.minX, model.boundingBox.maxY, model.boundingBox.minZ);
     glVertex3f(model.boundingBox.minX, model.boundingBox.minY, model.boundingBox.minZ);
@@ -220,14 +212,12 @@ void drawBoundingBox(Model model) {
     glEnd();
     // Top Face
     glBegin(GL_LINE_LOOP);
-    glColor3f(1.0, 1.0, 1.0);
     glVertex3f(model.boundingBox.minX, model.boundingBox.maxY, model.boundingBox.minZ);
     glVertex3f(model.boundingBox.minX, model.boundingBox.maxY, model.boundingBox.maxZ);
     glVertex3f(model.boundingBox.maxX, model.boundingBox.maxY, model.boundingBox.maxZ);
     glVertex3f(model.boundingBox.maxX, model.boundingBox.maxY, model.boundingBox.minZ);
     glEnd();
     // Bottom Face
-    glColor3f(0.0, 0.0, 0.0);
     glBegin(GL_LINE_LOOP);
     glVertex3f(model.boundingBox.minX, model.boundingBox.minY, model.boundingBox.maxZ);
     glVertex3f(model.boundingBox.minX, model.boundingBox.minY, model.boundingBox.minZ);
@@ -235,7 +225,6 @@ void drawBoundingBox(Model model) {
     glVertex3f(model.boundingBox.maxX, model.boundingBox.minY, model.boundingBox.maxZ);
     glEnd();
     // Left Face
-    glColor3f(1.0, 0.0, 0.0);
     glBegin(GL_LINE_LOOP);
     glVertex3f(model.boundingBox.minX, model.boundingBox.maxY, model.boundingBox.minZ);
     glVertex3f(model.boundingBox.minX, model.boundingBox.minY, model.boundingBox.minZ);
@@ -243,7 +232,6 @@ void drawBoundingBox(Model model) {
     glVertex3f(model.boundingBox.minX, model.boundingBox.maxY, model.boundingBox.maxZ);
     glEnd();
     // Right Face
-    glColor3f(0.0, 1.0, 0.0);
     glBegin(GL_LINE_LOOP);
     glVertex3f(model.boundingBox.maxX, model.boundingBox.maxY, model.boundingBox.minZ);
     glVertex3f(model.boundingBox.maxX, model.boundingBox.minY, model.boundingBox.minZ);
@@ -251,7 +239,6 @@ void drawBoundingBox(Model model) {
     glVertex3f(model.boundingBox.maxX, model.boundingBox.maxY, model.boundingBox.maxZ);
     glEnd();
     // Back Face
-    glColor3f(1.0, 1.0, 0.0);
     glBegin(GL_LINE_LOOP);
     glVertex3f(model.boundingBox.maxX, model.boundingBox.maxY, model.boundingBox.maxZ);
     glVertex3f(model.boundingBox.maxX, model.boundingBox.minY, model.boundingBox.maxZ);
