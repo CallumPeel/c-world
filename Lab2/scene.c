@@ -3,11 +3,13 @@
 Model* model1;
 Model* model2;
 float deltaAngle = 0.0f;
+float xAngle = 0;
+float yAngle = 0;
 
 static float viewer[] = {
-	0.0, 1.0, 15.0,
-	0.0, 0.0, 0.0,
-	0.0, 1.0, 0.0
+	0.0, 0.0, 1.0, // loc
+	0.0, 0.0, 0, // eye
+	0.0, 1.0, 0.0  // up vec
 };
 
 enum {
@@ -47,6 +49,7 @@ void init(void) {
 	const char* fileName = "bone.off";
 	model1 = readOFFFile(fileName);
 	model2 = readOFFFile(fileName);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	translateModelX(model1, -0.8, 0, 0);
 	translateModelX(model2, 0.8, 0, 0);
 	glClearColor(0.0, 0.5, 0.5, 0.0);
@@ -127,13 +130,13 @@ void keys(unsigned char key, int x, int y)
 	// Strafe left	
 	case 'a':
 		viewer[0] -= speed;
-		viewer[3] -= speed;
+		//viewer[3] -= speed;
 		break;
 
 	// Strafe right
 	case 'd':
 		viewer[0] += speed;
-		viewer[3] += speed;
+		//viewer[3] += speed;
 		break;
 	// forward
 	case 'w':
@@ -182,10 +185,15 @@ void keys(unsigned char key, int x, int y)
 	glutPostRedisplay();
 }
 
+float radians(float deg) {
+	return deg * 3.14159 / 180.0;
+}
+
 void mouseMove(int x, int y) {
-	x = x - 250;
-	deltaAngle = x * 0.005f;
-	viewer[3] = sin(deltaAngle);
-	viewer[5] = -cos(deltaAngle);
+	x = (x - 250)*-0.15;
+	xAngle += x;
+	viewer[5] = (sin(radians(xAngle))*250);
+	viewer[3] = (-cos(radians(xAngle))*250);
+	glutWarpPointer(250, 250);
 	glutPostRedisplay();
 }
