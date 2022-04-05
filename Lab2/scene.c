@@ -127,7 +127,6 @@ void scene(void) {
 
 void keys(unsigned char key, int x, int y)
 {
-	float speed = 0.5;
 	float distX = viewer[0] - viewer[3];
 	float distZ = viewer[2] - viewer[5];
 
@@ -140,7 +139,7 @@ void keys(unsigned char key, int x, int y)
 	Normal sideDirection = getUnitNormal(cameraLoc, upVector, lookatVector);
 
 	switch (key) {
-		// Strafe left	
+		// Strafe left
 	case 'a':
 	case 'A':
 		viewer[0] -= sideDirection.i;
@@ -172,17 +171,9 @@ void keys(unsigned char key, int x, int y)
 		viewer[3] += distX * 250;
 		viewer[5] += distZ * 250;
 		break;
-		// up
-	case 'e':
-		viewer[1] += 1;
-		break;
-		// down
-	case 'c':
-		viewer[1] -= 1;
-		break;
 
-		// model movements
-			// Left
+    // model movements
+        // Left
 	case 'g':
 		translateModelX(model1, -0.03, 0, 0);
 		break;
