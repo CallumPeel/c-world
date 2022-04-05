@@ -5,6 +5,8 @@ Model* model2;
 float deltaAngle = 0.0f;
 float xAngle = 0;
 float yAngle = 0;
+float xloc = 0;
+float zloc = 0;
 
 static float viewer[] = {
 	0.0, 0.0, 1.0, // loc
@@ -107,17 +109,17 @@ void scene(void) {
 		viewer[6], viewer[7], viewer[8]
 	);
 	glPushMatrix();
-		drawOrigin(); 
-		glColor3f(0.0, 0.9, 0.0);
-		if (!isColliding()) {
-			drawModel(*model1);
-			drawModel(*model2);
-		}
-		else {
-			glColor3f(1.0, 0.0, 0.0);
-		}
-		drawBoundingBox(*model1);
-		drawBoundingBox(*model2);
+	drawOrigin();
+	glColor3f(0.0, 0.9, 0.0);
+	if (!isColliding()) {
+		drawModel(*model1);
+		drawModel(*model2);
+	}
+	else {
+		glColor3f(1.0, 0.0, 0.0);
+	}
+	drawBoundingBox(*model1);
+	drawBoundingBox(*model2);
 	glPopMatrix();
 	glutSwapBuffers();
 	glFlush();
@@ -126,37 +128,48 @@ void scene(void) {
 void keys(unsigned char key, int x, int y)
 {
 	float speed = 0.5;
+	float distX = viewer[0] - viewer[3];
+	float distZ = viewer[2] - viewer[5];
 	switch (key) {
-	// Strafe left	
+		// Strafe left	
 	case 'a':
+	case 'A':
 		viewer[0] -= speed;
-		//viewer[3] -= speed;
+		viewer[3] -= speed;
 		break;
-
-	// Strafe right
+		// Strafe right
 	case 'd':
+	case 'D':
 		viewer[0] += speed;
-		//viewer[3] += speed;
+		viewer[3] += speed;
 		break;
-	// forward
+		// forward
 	case 'w':
-		viewer[2] -= speed;
+	case 'W':
+		viewer[0] -= distX * 250;
+		viewer[2] -= distZ * 250;
+		viewer[3] -= distX * 250;
+		viewer[5] -= distZ * 250;
 		break;
-	// back
+		// back
 	case 's':
-		viewer[2] += speed;
+	case 'S':
+		viewer[0] += distX * 250;
+		viewer[2] += distZ * 250;
+		viewer[3] += distX * 250;
+		viewer[5] += distZ * 250;
 		break;
-	// up
+		// up
 	case 'e':
 		viewer[1] += 1;
 		break;
-	// down
+		// down
 	case 'c':
 		viewer[1] -= 1;
 		break;
 
-	// model movements
-		// Left
+		// model movements
+			// Left
 	case 'g':
 		translateModelX(model1, -0.03, 0, 0);
 		break;
@@ -179,7 +192,7 @@ void keys(unsigned char key, int x, int y)
 	case 'n':
 		translateModelX(model1, 0, 0, -0.03);
 		break;
-}
+	}
 	if ((key == 'q') || (key == 'Q'))
 		exit(0);
 	glutPostRedisplay();
@@ -190,10 +203,15 @@ float radians(float deg) {
 }
 
 void mouseMove(int x, int y) {
-	x = (x - 250)*-0.15;
+	float speed = 0.002;
+	x -= 250;
 	xAngle += x;
-	viewer[5] = (sin(radians(xAngle))*250);
-	viewer[3] = (-cos(radians(xAngle))*250);
+	zloc = viewer[2] + ((sin(radians(-xAngle))) * speed);
+	xloc = viewer[0] + ((-cos(radians(-xAngle))) * speed);
+
+	viewer[3] = xloc;
+	viewer[5] = zloc;
+
 	glutWarpPointer(250, 250);
 	glutPostRedisplay();
 }
