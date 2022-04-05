@@ -140,7 +140,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="example.c" />
     <ClCompile Include="fileHandler.c" />
     <ClCompile Include="scene.c" />
     <ClCompile Include="off.c" />
@@ -149,7 +148,6 @@
     <ClCompile Include="vector.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="example.h" />
     <ClInclude Include="fileHandler.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="off.h" />

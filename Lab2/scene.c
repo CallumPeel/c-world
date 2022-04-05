@@ -9,9 +9,9 @@ float xloc = 0;
 float zloc = 0;
 
 static float viewer[] = {
-	0.0, 0.0, 1.0, // loc
-	0.0, 0.0, 0, // eye
-	0.0, 1.0, 0.0  // up vec
+	0.0, 0.0, 1.0,
+	0.0, 0.0, 0,
+	0.0, 1.0, 0.0
 };
 
 enum {
@@ -22,9 +22,9 @@ void drawOrigin() {
 	point3 origin[4] =
 	{
 		{0,-1,0},
-		{10.2,-1,0},
-		{0,10.2,0},
-		{0,-1,10.2}
+		{1,-1,0},
+		{0,0,0},
+		{0,-1,1}
 	};
 	glColor3f(1.0, 0.0, 0.0);
 	glLineWidth(2.0);
@@ -149,7 +149,6 @@ void keys(unsigned char key, int x, int y)
 		viewer[5] -= sideDirection.k;
 		break;
 		// Strafe right
-// TO FIX I NEED TO GET THE CROSS PRODUCT OF THE VECTOR BETWEEN (CAMLOC AND LOOKATPOINT) AND THE UP VECTOR
 	case 'd':
 	case 'D':
 		viewer[0] += sideDirection.i;

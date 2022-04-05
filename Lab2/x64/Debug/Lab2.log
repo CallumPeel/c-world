@@ -1,1 +1,16 @@
-﻿  Lab2.vcxproj -> C:\Repositories\c-world\x64\Debug\Lab5.exe
+﻿  scene.c
+C:\Repositories\c-world\Lab2\scene.c(55,30): warning C4305: 'function': truncation from 'double' to 'float'
+C:\Repositories\c-world\Lab2\scene.c(56,29): warning C4305: 'function': truncation from 'double' to 'float'
+C:\Repositories\c-world\Lab2\scene.c(113,20): warning C4305: 'function': truncation from 'double' to 'GLfloat'
+C:\Repositories\c-world\Lab2\scene.c(140,60): warning C4020: 'getUnitNormal': too many actual parameters
+C:\Repositories\c-world\Lab2\scene.c(187,32): warning C4305: 'function': truncation from 'double' to 'float'
+C:\Repositories\c-world\Lab2\scene.c(191,31): warning C4305: 'function': truncation from 'double' to 'float'
+C:\Repositories\c-world\Lab2\scene.c(195,34): warning C4305: 'function': truncation from 'double' to 'float'
+C:\Repositories\c-world\Lab2\scene.c(199,35): warning C4305: 'function': truncation from 'double' to 'float'
+C:\Repositories\c-world\Lab2\scene.c(202,37): warning C4305: 'function': truncation from 'double' to 'float'
+C:\Repositories\c-world\Lab2\scene.c(206,38): warning C4305: 'function': truncation from 'double' to 'float'
+C:\Repositories\c-world\Lab2\scene.c(215,30): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+C:\Repositories\c-world\Lab2\scene.c(222,54): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Repositories\c-world\Lab2\scene.c(223,55): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Repositories\c-world\Lab2\scene.c(219,1): warning C4305: 'initializing': truncation from 'double' to 'float'
+  Lab2.vcxproj -> C:\Repositories\c-world\x64\Debug\Lab5.exe
