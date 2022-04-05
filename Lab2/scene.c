@@ -21,10 +21,10 @@ enum {
 void drawOrigin() {
 	point3 origin[4] =
 	{
-		{0,0,0},
-		{10.2,0,0},
+		{0,-1,0},
+		{10.2,-1,0},
 		{0,10.2,0},
-		{0,0,10.2}
+		{0,-1,10.2}
 	};
 	glColor3f(1.0, 0.0, 0.0);
 	glLineWidth(2.0);
@@ -130,26 +130,32 @@ void keys(unsigned char key, int x, int y)
 	float speed = 0.5;
 	float distX = viewer[0] - viewer[3];
 	float distZ = viewer[2] - viewer[5];
+
 	Point3D cameraLoc = { viewer[0], viewer[1], viewer[2] };
-	Point3D cameraUpLoc = { viewer[0]+viewer[6], viewer[0]+viewer[7], viewer[0]+viewer[8] };
-	Normal sideDirection = getUnitNormal(cameraLoc, cameraUpLoc);
+	Point3D cameraUpLoc = { viewer[0]+viewer[6], viewer[1]+viewer[7], viewer[2]+viewer[8] };
+	Point3D lookatPoint = { viewer[3], viewer[4], viewer[5] };
+
+	Point3D upVector = getVector(cameraLoc, cameraUpLoc);
+	Point3D lookatVector = getVector(cameraLoc, lookatPoint);
+	Normal sideDirection = getUnitNormal(cameraLoc, upVector, lookatVector);
+
 	switch (key) {
 		// Strafe left	
 	case 'a':
 	case 'A':
-		viewer[0] += sideDirection.i;
-		viewer[2] += sideDirection.k;
-		viewer[3] += sideDirection.i;
-		viewer[5] += sideDirection.k;
+		viewer[0] -= sideDirection.i;
+		viewer[2] -= sideDirection.k;
+		viewer[3] -= sideDirection.i;
+		viewer[5] -= sideDirection.k;
 		break;
 		// Strafe right
 // TO FIX I NEED TO GET THE CROSS PRODUCT OF THE VECTOR BETWEEN (CAMLOC AND LOOKATPOINT) AND THE UP VECTOR
 	case 'd':
 	case 'D':
-		viewer[0] -= sideDirection.i;
-		viewer[2] -= sideDirection.k;
-		viewer[3] -= sideDirection.i;
-		viewer[5] -= sideDirection.k;
+		viewer[0] += sideDirection.i;
+		viewer[2] += sideDirection.k;
+		viewer[3] += sideDirection.i;
+		viewer[5] += sideDirection.k;
 		break;
 		// forward
 	case 'w':

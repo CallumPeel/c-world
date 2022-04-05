@@ -25,8 +25,6 @@ Normal getCrossProduct(Point3D U, Point3D V);
 
 Normal getNormalFromPoints3D(Point3D p1, Point3D p2, Point3D p3);
 
-float getMag(Normal normal);
-
 Normal getUnitNormal(Point3D U, Point3D V);
 
 typedef GLfloat point3[3];

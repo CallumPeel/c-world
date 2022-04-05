@@ -39,14 +39,24 @@ Normal getNormalFromPoints3D(Point3D p1, Point3D p2, Point3D p3){
 }
 
 float getMag(Normal normal) {
-    return sqrt((normal.i * normal.i) + (normal.j * normal.j) + (normal.k * normal.k));
+    float a, b, c;
+    a = normal.i;
+    b = normal.j;
+    c = normal.k;
+
+    if (normal.i != 0) a = (normal.i * normal.i);
+    if (normal.j != 0) b = (normal.j * normal.j);
+    if (normal.k != 0) c = (normal.k * normal.k);
+    return sqrt(a + b + c);
 }
 
-Normal getUnitNormal(Point3D U, Point3D V) {
-    Normal unitNormal = getCrossProduct(U, V);
+Normal getUnitNormal(Point3D a, Point3D b, Point3D c) {
+    Point3D E1 = getVector(b, a);
+    Point3D E2 = getVector(c, a);
+    Normal unitNormal = getCrossProduct(E1, E2);
     float mag = getMag(unitNormal);
-    unitNormal.i /= mag;
-    unitNormal.j /= mag;
-    unitNormal.k /= mag;
+    if (unitNormal.i != 0) unitNormal.i /= mag;
+    if (unitNormal.j != 0) unitNormal.j /= mag;
+    if (unitNormal.k != 0) unitNormal.k /= mag;
     return unitNormal;
 }

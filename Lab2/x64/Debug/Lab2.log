@@ -1,3 +1,1 @@
-﻿  vector.c
-C:\Repositories\c-world\Lab2\vector.c(51,87): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
-  Lab2.vcxproj -> C:\Repositories\c-world\x64\Debug\Lab5.exe
+﻿  Lab2.vcxproj -> C:\Repositories\c-world\x64\Debug\Lab5.exe
