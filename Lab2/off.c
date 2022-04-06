@@ -51,6 +51,8 @@ Model* getModel(FILE* file)
     scaleModel(model);
     translateModel(model);
     model->boundingBox = getBoundingBox(*model);
+    model->centre = getCenterOfMass(*model);
+    model->radius = getRadiusOfModel(*model);
     return model;
 }
 
@@ -247,8 +249,11 @@ void drawBoundingBox(Model model) {
     glEnd();
 }
 
+void drawBoundingSphere(Model model) {
+    glutWireSphere(model.radius, 50, 50);
+}
+
 void drawModel(Model model) {
-    glColor3f(0.0, 1.0, 0.0);
     for (int i = 0; i < model.NFaces; ++i) {
         glBegin(GL_TRIANGLES);
         glVertex3f(model.vertices[model.faces[i].i].x, model.vertices[model.faces[i].i].y, model.vertices[model.faces[i].i].z);
@@ -270,6 +275,9 @@ void translateModelX(Model* model, float x, float y, float z) {
     model->boundingBox.maxY += y;
     model->boundingBox.minZ += z;
     model->boundingBox.maxZ += z;
+    model->centre.x += x;
+    model->centre.y += y;
+    model->centre.z += z;
 }
 
 BoundingBox getBoundingBox(Model model) {

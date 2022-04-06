@@ -47,6 +47,10 @@ void drawOrigin() {
 
 }
 
+void drawFloor() {
+
+}
+
 void init(void) {
 	const char* fileName = "bone.off";
 	model1 = readOFFFile(fileName);
@@ -112,7 +116,9 @@ void scene(void) {
 	drawOrigin();
 	glColor3f(0.0, 0.9, 0.0);
 	if (!isColliding()) {
+		glColor3f(0.0, 0.0, 1.0);
 		drawModel(*model1);
+		glColor3f(1.0, 0.0, 0.0);
 		drawModel(*model2);
 	}
 	else {
@@ -120,6 +126,8 @@ void scene(void) {
 	}
 	drawBoundingBox(*model1);
 	drawBoundingBox(*model2);
+	//drawBoundingSphere(*model1);
+	//drawBoundingSphere(*model2);
 	glPopMatrix();
 	glutSwapBuffers();
 	glFlush();
@@ -192,7 +200,6 @@ void keys(unsigned char key, int x, int y)
 	case 'b':
 		translateModelX(model1, 0, 0, 0.03);
 		break;
-		// Down
 	case 'n':
 		translateModelX(model1, 0, 0, -0.03);
 		break;

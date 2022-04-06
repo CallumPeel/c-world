@@ -22,6 +22,8 @@ typedef struct Model {
     Face* faces;
     modelInfo* edges;
     BoundingBox boundingBox;
+    Point3D centre;
+    float radius;
 }Model;
 
 bool isOFF(FILE* file);
@@ -61,5 +63,7 @@ void drawModel(Model model);
 void translateModelX(Model* model, float x, float y, float z);
 
 BoundingBox getBoundingBox(Model model);
+
+void drawBoundingSphere(Model model);
 
 void drawBoundingBox(Model model);
