@@ -249,10 +249,6 @@ void drawBoundingBox(Model model) {
     glEnd();
 }
 
-void drawBoundingSphere(Model model) {
-    glutWireSphere(model.radius, 50, 50);
-}
-
 void drawModel(Model model) {
     for (int i = 0; i < model.NFaces; ++i) {
         glBegin(GL_TRIANGLES);

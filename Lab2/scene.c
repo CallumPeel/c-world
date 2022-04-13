@@ -9,8 +9,8 @@ float xloc = 0;
 float zloc = 0;
 
 static float viewer[] = {
-	0.0, 0.0, 1.0,
-	0.0, 0.0, 0,
+	0.0, 0.0, 1.0,  // location
+	0.0, 0.0, 0,	// look at point
 	0.0, 1.0, 0.0
 };
 
@@ -48,7 +48,22 @@ void drawOrigin() {
 }
 
 void drawFloor() {
+	point3 floor[4] =
+	{
+		{-1, 0, 1},
+		{-1, 0, -1},
+		{1, 0, -1},
+		{1, 0, 1}
+	};
 
+	glColor3f(0.2, 0.2, 0.2);
+	glLineWidth(2.0);
+	glBegin(GL_POLYGON);
+	glVertex3fv(floor[0]);
+	glVertex3fv(floor[1]);
+	glVertex3fv(floor[2]);
+	glVertex3fv(floor[3]);
+	glEnd();
 }
 
 void init(void) {
@@ -114,6 +129,10 @@ void scene(void) {
 	);
 	glPushMatrix();
 	drawOrigin();
+	glScaled(100.0, 1.0, 100.0);
+	glTranslated(0, -1, 0);
+	drawFloor();
+	glPopMatrix();
 	glColor3f(0.0, 0.9, 0.0);
 	if (!isColliding()) {
 		glColor3f(0.0, 0.0, 1.0);
@@ -126,8 +145,6 @@ void scene(void) {
 	}
 	drawBoundingBox(*model1);
 	drawBoundingBox(*model2);
-	//drawBoundingSphere(*model1);
-	//drawBoundingSphere(*model2);
 	glPopMatrix();
 	glutSwapBuffers();
 	glFlush();

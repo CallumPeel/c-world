@@ -64,6 +64,4 @@ void translateModelX(Model* model, float x, float y, float z);
 
 BoundingBox getBoundingBox(Model model);
 
-void drawBoundingSphere(Model model);
-
 void drawBoundingBox(Model model);
