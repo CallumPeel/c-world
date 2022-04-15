@@ -7,6 +7,7 @@ float xAngle = 0;
 float yAngle = 0;
 float xloc = 0;
 float zloc = 0;
+float sunRot = 0;
 
 static float viewer[] = {
 	0.0, 0.0, 1.0,  // location
@@ -139,7 +140,8 @@ void scene(void) {
 	// Translate world. Keeps sun relative to viewer.
 	glTranslated(viewer[0], viewer[1], viewer[2]);
 	// Rotate world.
-	glRotated(10,1,0,0);
+	glRotated(sunRot,1,0,0);
+	sunRot = sunRot + 0.01;
 	int numOfCirclePoints = 100;
 	float radiusOfSun = 3;
 	float twoPi = 3.14159 * 2;
