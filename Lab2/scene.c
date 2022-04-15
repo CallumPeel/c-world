@@ -133,6 +133,34 @@ void scene(void) {
 	glTranslated(0, -1, 0);
 	drawFloor();
 	glPopMatrix();
+
+	// draw sun here
+	glPushMatrix();
+	glRotated(-15,1,0,0);
+	int numOfCirclePoints = 100;
+	float radiusOfSun = 3;
+	float twoPi = 3.14159 * 2;
+	float x = 0;
+	float y = 20;
+	float z = -50;
+	glColor3f(1, 0.8, 0.0);
+	glLineWidth(2.0);
+	glBegin(GL_POLYGON);
+	for (int i = 0; i < numOfCirclePoints; i++) {
+		glVertex3f(
+			// Take center of circle
+			// 2pi / number of points gives theta
+			// i marks which point in the circle
+			// cos gives x value in the sin function
+			// sin gives y value in the sin function
+			x + (radiusOfSun * cos(i * twoPi / numOfCirclePoints)),
+			y + (radiusOfSun * sin(i * twoPi / numOfCirclePoints)),
+			z
+		);
+	}
+	glEnd();
+	glPopMatrix();
+
 	glColor3f(0.0, 0.9, 0.0);
 	if (!isColliding()) {
 		glColor3f(0.0, 0.0, 1.0);
@@ -163,22 +191,26 @@ void keys(unsigned char key, int x, int y)
 	Point3D lookatVector = getVector(cameraLoc, lookatPoint);
 	Normal sideDirection = getUnitNormal(cameraLoc, upVector, lookatVector);
 
+	float dx = (viewer[3] - viewer[0]) * 400;
+	float dz = (viewer[5] - viewer[2]) * 400;
+
 	switch (key) {
 		// Strafe left
 	case 'a':
 	case 'A':
-		viewer[0] -= sideDirection.i;
-		viewer[2] -= sideDirection.k;
-		viewer[3] -= sideDirection.i;
-		viewer[5] -= sideDirection.k;
+		viewer[0] += dz;
+		viewer[2] += -dx;
+		viewer[3] += dz;
+		viewer[5] += -dx;
+
 		break;
 		// Strafe right
 	case 'd':
 	case 'D':
-		viewer[0] += sideDirection.i;
-		viewer[2] += sideDirection.k;
-		viewer[3] += sideDirection.i;
-		viewer[5] += sideDirection.k;
+		viewer[0] += -dz;
+		viewer[2] += dx;
+		viewer[3] += -dz;
+		viewer[5] += dx;
 		break;
 		// forward
 	case 'w':
