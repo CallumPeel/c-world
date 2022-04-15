@@ -136,13 +136,13 @@ void scene(void) {
 
 	// draw sun here
 	glPushMatrix();
-	glRotated(-15,1,0,0);
+	// Translate world. Keeps sun relative to viewer.
+	glTranslated(viewer[0], viewer[1], viewer[2]);
+	// Rotate world.
+	glRotated(10,1,0,0);
 	int numOfCirclePoints = 100;
 	float radiusOfSun = 3;
 	float twoPi = 3.14159 * 2;
-	float x = 0;
-	float y = 20;
-	float z = -50;
 	glColor3f(1, 0.8, 0.0);
 	glLineWidth(2.0);
 	glBegin(GL_POLYGON);
@@ -150,12 +150,12 @@ void scene(void) {
 		glVertex3f(
 			// Take center of circle
 			// 2pi / number of points gives theta
-			// i marks which point in the circle
+			// "i" marks which point in the circle
 			// cos gives x value in the sin function
 			// sin gives y value in the sin function
-			x + (radiusOfSun * cos(i * twoPi / numOfCirclePoints)),
-			y + (radiusOfSun * sin(i * twoPi / numOfCirclePoints)),
-			z
+			radiusOfSun * cos(i * twoPi / numOfCirclePoints),
+			radiusOfSun * sin(i * twoPi / numOfCirclePoints),
+			-50
 		);
 	}
 	glEnd();

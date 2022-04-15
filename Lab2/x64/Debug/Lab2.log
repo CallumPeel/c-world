@@ -6,10 +6,10 @@ C:\Repositories\c-world\Lab2\scene.c(59,25): warning C4305: 'function': truncati
 C:\Repositories\c-world\Lab2\scene.c(74,30): warning C4305: 'function': truncation from 'double' to 'float'
 C:\Repositories\c-world\Lab2\scene.c(75,29): warning C4305: 'function': truncation from 'double' to 'float'
 C:\Repositories\c-world\Lab2\scene.c(146,18): warning C4305: 'function': truncation from 'double' to 'GLfloat'
-C:\Repositories\c-world\Lab2\scene.c(156,58): warning C4244: 'function': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Repositories\c-world\Lab2\scene.c(157,58): warning C4244: 'function': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Repositories\c-world\Lab2\scene.c(156,52): warning C4244: 'function': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Repositories\c-world\Lab2\scene.c(157,52): warning C4244: 'function': conversion from 'double' to 'GLfloat', possible loss of data
 C:\Repositories\c-world\Lab2\scene.c(164,20): warning C4305: 'function': truncation from 'double' to 'GLfloat'
-C:\Repositories\c-world\Lab2\scene.c(142,1): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Repositories\c-world\Lab2\scene.c(145,1): warning C4305: 'initializing': truncation from 'double' to 'float'
 C:\Repositories\c-world\Lab2\scene.c(235,32): warning C4305: 'function': truncation from 'double' to 'float'
 C:\Repositories\c-world\Lab2\scene.c(239,31): warning C4305: 'function': truncation from 'double' to 'float'
 C:\Repositories\c-world\Lab2\scene.c(243,34): warning C4305: 'function': truncation from 'double' to 'float'
