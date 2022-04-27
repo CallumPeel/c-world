@@ -13,6 +13,7 @@ int main(int argc, char** argv)
 	glutPassiveMotionFunc(mouseMove);
 	glutKeyboardFunc(keys);
 	glutSetCursor(GLUT_CURSOR_NONE);
+	glutWarpPointer(250, 250);
 	glutIdleFunc(animate);
 	glutDisplayFunc(scene);
 	init();

@@ -1,5 +1,12 @@
 #include "off.h"
 
+// The time in milliseconds between timer ticks
+#define TIMERMSECS 200
+float startTime, prevTime;
+static float days = 0.f, hrs = 0.f;
+static float timeScale = 3600.f;  // 1s in reallife corresponds to 1hr in simulation
+
+
 Model* model1;
 Model* model2;
 Model* sceneFloor;
@@ -9,7 +16,7 @@ float yAngle = 0;
 float xloc = 0;
 float zloc = 0;
 float sunRot = 0;
-float myGravity = 0.0000005f;
+float myGravity = 0.00005f;
 
 static float viewer[] = {
 	0.0, 0.0, 1.0,  // location
@@ -55,6 +62,29 @@ void gravity(Model* model) {
 }
 
 void animate() {
+
+	glutTimerFunc(TIMERMSECS, animate, 0);
+
+
+	// 1. Get the elapsed time in seconds
+	float currTime = glutGet(GLUT_ELAPSED_TIME) / 1000.0;
+	float timeSincePrevFrame = currTime - prevTime;  // time elapsed since previous frame
+
+	// 2. Update the hrs
+	//    The division by 3600 is to convert time into hrs
+	hrs = hrs + (timeSincePrevFrame / 3600) * timeScale;
+	while (hrs > 24)
+		hrs = hrs - 24;
+
+	// 3. Update the days
+	//    The division by 3600 is to convert time into days
+	days = days + (timeSincePrevFrame / (3600 * 24)) * timeScale;
+	while (days > 365)
+		days = days - 365;
+
+	// 3. Make sure you save the current time to use it in the next call to this function
+	prevTime = currTime;
+
 	if (model1->boundingBox.minY >= -1) {
 		gravity(model1);
 		//model2->velocity.y -= 0.00000001f;
@@ -64,18 +94,17 @@ void animate() {
 		model2->velocity.y = 0;
 	}
 
-	//glutPostRedisplay();
+	glutPostRedisplay();
 }
 
 void init(void) {
-	glutWarpPointer(250, 250);
 	const char* fileName = "bone.off";
 	model1 = readOFFFile(fileName);
 	model2 = readOFFFile(fileName);
 	sceneFloor = readOFFFile("floor.off");
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
-	translateModel(model1, -0.8, 5, -10);
+	translateModel(model1, -0.8, 0, -10);
 	translateModel(model2, 0.8, 0, -10);
 	glClearColor(0.0, 0.5, 0.5, 0.0);
 	glColor3f(1.0, 0.0, 0.0);
@@ -113,6 +142,9 @@ void init(void) {
 			bottom, top,
 			nearVal, farVal);
 	}
+	// Get the current time in seconds
+	prevTime = glutGet(GLUT_ELAPSED_TIME) / 1000.f;
+	glutTimerFunc(TIMERMSECS, animate, 0);
 }
 
 bool isColliding() {
@@ -259,6 +291,9 @@ void keys(unsigned char key, int x, int y)
 		break;
 	case 'n':
 		translateModel(model1, 0, 0, -0.03);
+		break;
+	case 'p':
+		model1->velocity.y += 0.01;
 		break;
 	}
 	if ((key == 'q') || (key == 'Q'))
