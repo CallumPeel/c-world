@@ -1,25 +1,25 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(513,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (Lab5.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   scene.c
-C:\Repositories\c-world\Lab2\scene.c(60,15): warning C4305: 'function': truncation from 'double' to 'GLfloat'
-C:\Repositories\c-world\Lab2\scene.c(60,20): warning C4305: 'function': truncation from 'double' to 'GLfloat'
-C:\Repositories\c-world\Lab2\scene.c(60,25): warning C4305: 'function': truncation from 'double' to 'GLfloat'
-C:\Repositories\c-world\Lab2\scene.c(93,29): warning C4305: 'function': truncation from 'double' to 'float'
-C:\Repositories\c-world\Lab2\scene.c(94,28): warning C4305: 'function': truncation from 'double' to 'float'
-C:\Repositories\c-world\Lab2\scene.c(162,23): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Repositories\c-world\Lab2\scene.c(166,18): warning C4305: 'function': truncation from 'double' to 'GLfloat'
-C:\Repositories\c-world\Lab2\scene.c(176,52): warning C4244: 'function': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Repositories\c-world\Lab2\scene.c(177,52): warning C4244: 'function': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Repositories\c-world\Lab2\scene.c(184,20): warning C4305: 'function': truncation from 'double' to 'GLfloat'
-C:\Repositories\c-world\Lab2\scene.c(165,1): warning C4305: 'initializing': truncation from 'double' to 'float'
-C:\Repositories\c-world\Lab2\scene.c(257,31): warning C4305: 'function': truncation from 'double' to 'float'
-C:\Repositories\c-world\Lab2\scene.c(261,30): warning C4305: 'function': truncation from 'double' to 'float'
-C:\Repositories\c-world\Lab2\scene.c(265,33): warning C4305: 'function': truncation from 'double' to 'float'
-C:\Repositories\c-world\Lab2\scene.c(269,34): warning C4305: 'function': truncation from 'double' to 'float'
-C:\Repositories\c-world\Lab2\scene.c(272,36): warning C4305: 'function': truncation from 'double' to 'float'
-C:\Repositories\c-world\Lab2\scene.c(275,37): warning C4305: 'function': truncation from 'double' to 'float'
-C:\Repositories\c-world\Lab2\scene.c(214,9): warning C4101: 'sideDirection': unreferenced local variable
-C:\Repositories\c-world\Lab2\scene.c(284,30): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
-C:\Repositories\c-world\Lab2\scene.c(291,54): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Repositories\c-world\Lab2\scene.c(292,55): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Repositories\c-world\Lab2\scene.c(288,1): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Repositories\c-world\Lab2\scene.c(78,29): warning C4305: 'function': truncation from 'double' to 'float'
+C:\Repositories\c-world\Lab2\scene.c(79,28): warning C4305: 'function': truncation from 'double' to 'float'
+C:\Repositories\c-world\Lab2\scene.c(138,15): warning C4305: 'function': truncation from 'double' to 'GLfloat'
+C:\Repositories\c-world\Lab2\scene.c(138,20): warning C4305: 'function': truncation from 'double' to 'GLfloat'
+C:\Repositories\c-world\Lab2\scene.c(138,25): warning C4305: 'function': truncation from 'double' to 'GLfloat'
+C:\Repositories\c-world\Lab2\scene.c(148,23): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Repositories\c-world\Lab2\scene.c(152,18): warning C4305: 'function': truncation from 'double' to 'GLfloat'
+C:\Repositories\c-world\Lab2\scene.c(162,52): warning C4244: 'function': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Repositories\c-world\Lab2\scene.c(163,52): warning C4244: 'function': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Repositories\c-world\Lab2\scene.c(170,20): warning C4305: 'function': truncation from 'double' to 'GLfloat'
+C:\Repositories\c-world\Lab2\scene.c(151,1): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Repositories\c-world\Lab2\scene.c(243,31): warning C4305: 'function': truncation from 'double' to 'float'
+C:\Repositories\c-world\Lab2\scene.c(247,30): warning C4305: 'function': truncation from 'double' to 'float'
+C:\Repositories\c-world\Lab2\scene.c(251,33): warning C4305: 'function': truncation from 'double' to 'float'
+C:\Repositories\c-world\Lab2\scene.c(255,34): warning C4305: 'function': truncation from 'double' to 'float'
+C:\Repositories\c-world\Lab2\scene.c(258,36): warning C4305: 'function': truncation from 'double' to 'float'
+C:\Repositories\c-world\Lab2\scene.c(261,37): warning C4305: 'function': truncation from 'double' to 'float'
+C:\Repositories\c-world\Lab2\scene.c(200,9): warning C4101: 'sideDirection': unreferenced local variable
+C:\Repositories\c-world\Lab2\scene.c(270,30): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+C:\Repositories\c-world\Lab2\scene.c(277,54): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Repositories\c-world\Lab2\scene.c(278,55): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Repositories\c-world\Lab2\scene.c(274,1): warning C4305: 'initializing': truncation from 'double' to 'float'
   Lab2.vcxproj -> C:\Repositories\c-world\x64\Debug\Ass1-289.exe

@@ -2,12 +2,14 @@
 
 Model* model1;
 Model* model2;
+Model* sceneFloor;
 float deltaAngle = 0.0f;
 float xAngle = 0;
 float yAngle = 0;
 float xloc = 0;
 float zloc = 0;
 float sunRot = 0;
+float myGravity = 0.0000005f;
 
 static float viewer[] = {
 	0.0, 0.0, 1.0,  // location
@@ -48,27 +50,8 @@ void drawOrigin() {
 
 }
 
-void drawFloor() {
-	point3 floor[4] =
-	{
-		{-1, 0, 1},
-		{-1, 0, -1},
-		{1, 0, -1},
-		{1, 0, 1}
-	};
-
-	glColor3f(0.2, 0.2, 0.2);
-	glLineWidth(2.0);
-	glBegin(GL_POLYGON);
-	glVertex3fv(floor[0]);
-	glVertex3fv(floor[1]);
-	glVertex3fv(floor[2]);
-	glVertex3fv(floor[3]);
-	glEnd();
-}
-
 void gravity(Model* model) {
-	model->velocity.y -= 0.00000001f;
+	model->velocity.y -= myGravity;
 }
 
 void animate() {
@@ -85,13 +68,15 @@ void animate() {
 }
 
 void init(void) {
+	glutWarpPointer(250, 250);
 	const char* fileName = "bone.off";
 	model1 = readOFFFile(fileName);
 	model2 = readOFFFile(fileName);
+	sceneFloor = readOFFFile("floor.off");
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
-	translateModel(model1, -0.8, 0, 0);
-	translateModel(model2, 0.8, 0, 0);
+	translateModel(model1, -0.8, 5, -10);
+	translateModel(model2, 0.8, 0, -10);
 	glClearColor(0.0, 0.5, 0.5, 0.0);
 	glColor3f(1.0, 0.0, 0.0);
 	glLineWidth(2.0);
@@ -150,7 +135,8 @@ void scene(void) {
 	drawOrigin();
 	glScaled(100.0, 1.0, 100.0);
 	glTranslated(0, -1, 0);
-	drawFloor();
+	glColor3f(0.6, 0.6, 0.6);
+	drawModel(sceneFloor);
 	glPopMatrix();
 
 	// draw sun here
