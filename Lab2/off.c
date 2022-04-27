@@ -49,10 +49,15 @@ Model* getModel(FILE* file)
     model->faces = faces;
 
     scaleModel(model);
-    translateModel(model);
+    translateModelToCenter(model);
     model->boundingBox = getBoundingBox(*model);
     model->centre = getCenterOfMass(*model);
     model->radius = getRadiusOfModel(*model);
+    Point3D velocity;
+    velocity.x = 0;
+    velocity.y = 0;
+    velocity.z = 0;
+    model->velocity = velocity;
     return model;
 }
 
@@ -173,7 +178,7 @@ float getRadiusOfModel(Model model) {
     return rad1;
 }
 
-void translateModel(Model* model) {
+void translateModelToCenter(Model* model) {
     Point3D c = getCenterOfMass(*model);
     for (int i = 0; i < model->NVerts; i++) {
         model->vertices[i].x = model->vertices[i].x - c.x;
@@ -249,17 +254,18 @@ void drawBoundingBox(Model model) {
     glEnd();
 }
 
-void drawModel(Model model) {
-    for (int i = 0; i < model.NFaces; ++i) {
+void drawModel(Model* model) {
+    translateModel(model, model->velocity.x, model->velocity.y, model->velocity.z);
+    for (int i = 0; i < model->NFaces; ++i) {
         glBegin(GL_TRIANGLES);
-        glVertex3f(model.vertices[model.faces[i].i].x, model.vertices[model.faces[i].i].y, model.vertices[model.faces[i].i].z);
-        glVertex3f(model.vertices[model.faces[i].j].x, model.vertices[model.faces[i].j].y, model.vertices[model.faces[i].j].z);
-        glVertex3f(model.vertices[model.faces[i].k].x, model.vertices[model.faces[i].k].y, model.vertices[model.faces[i].k].z);
+        glVertex3f(model->vertices[model->faces[i].i].x, model->vertices[model->faces[i].i].y, model->vertices[model->faces[i].i].z);
+        glVertex3f(model->vertices[model->faces[i].j].x, model->vertices[model->faces[i].j].y, model->vertices[model->faces[i].j].z);
+        glVertex3f(model->vertices[model->faces[i].k].x, model->vertices[model->faces[i].k].y, model->vertices[model->faces[i].k].z);
         glEnd();
     }
 }
 
-void translateModelX(Model* model, float x, float y, float z) {
+void translateModel(Model* model, float x, float y, float z) {
     for (int i = 0; i < model->NVerts; i++) {
         model->vertices[i].x = model->vertices[i].x + x;
         model->vertices[i].y = model->vertices[i].y + y;

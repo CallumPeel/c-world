@@ -24,6 +24,7 @@ typedef struct Model {
     BoundingBox boundingBox;
     Point3D centre;
     float radius;
+    Point3D velocity;
 }Model;
 
 bool isOFF(FILE* file);
@@ -54,13 +55,13 @@ Point3D getCenterOfMass(Model model);
 
 float getRadiusOfModel(Model model);
 
-void translateModel(Model* model);
+void translateModelToCenter(Model* model);
 
 void scaleModel(Model* model);
 
-void drawModel(Model model);
+void drawModel(Model* model);
 
-void translateModelX(Model* model, float x, float y, float z);
+void translateModel(Model* model, float x, float y, float z);
 
 BoundingBox getBoundingBox(Model model);
 

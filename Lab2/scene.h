@@ -3,6 +3,8 @@
 
 void drawOrigin();
 
+void animate();
+
 void init(void);
 
 bool isColliding();

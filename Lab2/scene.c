@@ -67,13 +67,31 @@ void drawFloor() {
 	glEnd();
 }
 
+void gravity(Model* model) {
+	model->velocity.y -= 0.00000001f;
+}
+
+void animate() {
+	if (model1->boundingBox.minY >= -1) {
+		gravity(model1);
+		//model2->velocity.y -= 0.00000001f;
+	}
+	else {
+		model1->velocity.y = 0;
+		model2->velocity.y = 0;
+	}
+
+	//glutPostRedisplay();
+}
+
 void init(void) {
 	const char* fileName = "bone.off";
 	model1 = readOFFFile(fileName);
 	model2 = readOFFFile(fileName);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	translateModelX(model1, -0.8, 0, 0);
-	translateModelX(model2, 0.8, 0, 0);
+	glEnable(GL_DEPTH_TEST);
+	translateModel(model1, -0.8, 0, 0);
+	translateModel(model2, 0.8, 0, 0);
 	glClearColor(0.0, 0.5, 0.5, 0.0);
 	glColor3f(1.0, 0.0, 0.0);
 	glLineWidth(2.0);
@@ -141,7 +159,7 @@ void scene(void) {
 	glTranslated(viewer[0], viewer[1], viewer[2]);
 	// Rotate world.
 	glRotated(sunRot,1,0,0);
-	sunRot = sunRot + 0.01;
+	sunRot = sunRot + 0.1;
 	int numOfCirclePoints = 100;
 	float radiusOfSun = 3;
 	float twoPi = 3.14159 * 2;
@@ -157,7 +175,7 @@ void scene(void) {
 			// sin gives y value in the sin function
 			radiusOfSun * cos(i * twoPi / numOfCirclePoints),
 			radiusOfSun * sin(i * twoPi / numOfCirclePoints),
-			-50
+			-100
 		);
 	}
 	glEnd();
@@ -166,18 +184,20 @@ void scene(void) {
 	glColor3f(0.0, 0.9, 0.0);
 	if (!isColliding()) {
 		glColor3f(0.0, 0.0, 1.0);
-		drawModel(*model1);
+		drawModel(model1);
 		glColor3f(1.0, 0.0, 0.0);
-		drawModel(*model2);
+		drawModel(model2);
 	}
 	else {
-		glColor3f(1.0, 0.0, 0.0);
+		glColor3f(0.0, 0.0, 0.0);
+		drawModel(model1);
+		glColor3f(0.0, 0.0, 0.0);
+		drawModel(model2);
 	}
 	drawBoundingBox(*model1);
 	drawBoundingBox(*model2);
 	glPopMatrix();
 	glutSwapBuffers();
-	glFlush();
 }
 
 void keys(unsigned char key, int x, int y)
@@ -234,25 +254,25 @@ void keys(unsigned char key, int x, int y)
     // model movements
         // Left
 	case 'g':
-		translateModelX(model1, -0.03, 0, 0);
+		translateModel(model1, -0.03, 0, 0);
 		break;
 		// Right
 	case 'h':
-		translateModelX(model1, 0.03, 0, 0);
+		translateModel(model1, 0.03, 0, 0);
 		break;
 		// Up
 	case 't':
-		translateModelX(model1, 0, 0.03, 0);
+		translateModel(model1, 0, 0.03, 0);
 		break;
 		// Down
 	case 'y':
-		translateModelX(model1, 0, -0.03, 0);
+		translateModel(model1, 0, -0.03, 0);
 		break;
 	case 'b':
-		translateModelX(model1, 0, 0, 0.03);
+		translateModel(model1, 0, 0, 0.03);
 		break;
 	case 'n':
-		translateModelX(model1, 0, 0, -0.03);
+		translateModel(model1, 0, 0, -0.03);
 		break;
 	}
 	if ((key == 'q') || (key == 'Q'))
