@@ -63,6 +63,7 @@ void gravity(Model* model) {
 
 void animate() {
 
+	printf("%.2f\n", model1->velocity.y);
 	glutTimerFunc(TIMERMSECS, animate, 0);
 
 
@@ -81,17 +82,16 @@ void animate() {
 	days = days + (timeSincePrevFrame / (3600 * 24)) * timeScale;
 	while (days > 365)
 		days = days - 365;
-
+	gravity(model1);
 	// 3. Make sure you save the current time to use it in the next call to this function
 	prevTime = currTime;
-
-	if (model1->boundingBox.minY >= -1) {
-		gravity(model1);
-		//model2->velocity.y -= 0.00000001f;
+	// if model hits ground and still has velocity, flip velocity and apply gravity
+	if (model1->boundingBox.minY <= -1 && model1->velocity.y > 0) {
+		model1->velocity.y * -1;
 	}
-	else {
-		model1->velocity.y = 0;
-		model2->velocity.y = 0;
+	// if model hits ground and has no velocity then stop gravity?
+	if (model1->boundingBox.minY <= -1 && model1->velocity.y <= 0) {
+		model1->velocity.y = 0
 	}
 
 	glutPostRedisplay();
@@ -269,8 +269,8 @@ void keys(unsigned char key, int x, int y)
 		viewer[5] += distZ * 250;
 		break;
 
-    // model movements
-        // Left
+		// model movements
+			// Left
 	case 'g':
 		translateModel(model1, -0.03, 0, 0);
 		break;
@@ -293,7 +293,7 @@ void keys(unsigned char key, int x, int y)
 		translateModel(model1, 0, 0, -0.03);
 		break;
 	case 'p':
-		model1->velocity.y += 0.01;
+		model1->velocity.y += 0.1;
 		break;
 	}
 	if ((key == 'q') || (key == 'Q'))
