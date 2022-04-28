@@ -1,7 +1,6 @@
 #include "off.h"
 
 // The time in milliseconds between timer ticks
-#define TIMERMSECS 200
 float startTime, prevTime;
 static float days = 0.f, hrs = 0.f;
 static float timeScale = 3600.f;  // 1s in reallife corresponds to 1hr in simulation
@@ -16,7 +15,7 @@ float yAngle = 0;
 float xloc = 0;
 float zloc = 0;
 float sunRot = 0;
-float myGravity = 0.00005f;
+float myGravity = 0.001f;
 
 static float viewer[] = {
 	0.0, 0.0, 1.0,  // location
@@ -64,24 +63,22 @@ void gravity(Model* model) {
 void animate() {
 
 	printf("%.2f\n", model1->velocity.y);
-	glutTimerFunc(TIMERMSECS, animate, 0);
 
 
 	// 1. Get the elapsed time in seconds
 	float currTime = glutGet(GLUT_ELAPSED_TIME) / 1000.0;
 	float timeSincePrevFrame = currTime - prevTime;  // time elapsed since previous frame
-
 	// 2. Update the hrs
 	//    The division by 3600 is to convert time into hrs
 	hrs = hrs + (timeSincePrevFrame / 3600) * timeScale;
 	while (hrs > 24)
 		hrs = hrs - 24;
-
 	// 3. Update the days
 	//    The division by 3600 is to convert time into days
 	days = days + (timeSincePrevFrame / (3600 * 24)) * timeScale;
 	while (days > 365)
 		days = days - 365;
+
 	gravity(model1);
 	// 3. Make sure you save the current time to use it in the next call to this function
 	prevTime = currTime;
@@ -91,10 +88,8 @@ void animate() {
 	}
 	// if model hits ground and has no velocity then stop gravity?
 	if (model1->boundingBox.minY <= -1 && model1->velocity.y <= 0) {
-		model1->velocity.y = 0
+		model1->velocity.y = 0;
 	}
-
-	glutPostRedisplay();
 }
 
 void init(void) {
@@ -144,7 +139,7 @@ void init(void) {
 	}
 	// Get the current time in seconds
 	prevTime = glutGet(GLUT_ELAPSED_TIME) / 1000.f;
-	glutTimerFunc(TIMERMSECS, animate, 0);
+	//glutTimerFunc(TIMERMSECS, animate, 0);
 }
 
 bool isColliding() {
@@ -155,6 +150,7 @@ bool isColliding() {
 }
 
 void scene(void) {
+	animate();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -293,7 +289,7 @@ void keys(unsigned char key, int x, int y)
 		translateModel(model1, 0, 0, -0.03);
 		break;
 	case 'p':
-		model1->velocity.y += 0.1;
+		model1->velocity.y += 0.05;
 		break;
 	}
 	if ((key == 'q') || (key == 'Q'))

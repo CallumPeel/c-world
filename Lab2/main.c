@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <gl/freeglut.h>
 #include "scene.h"
+#define TIMERMSECS 200
 
 int main(int argc, char** argv)
 {
@@ -14,7 +15,8 @@ int main(int argc, char** argv)
 	glutKeyboardFunc(keys);
 	glutSetCursor(GLUT_CURSOR_NONE);
 	glutWarpPointer(250, 250);
-	glutIdleFunc(animate);
+	glutTimerFunc(TIMERMSECS, animate, 0);
+	//glutIdleFunc(animate);
 	glutDisplayFunc(scene);
 	init();
 	glutMainLoop();
