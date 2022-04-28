@@ -59,6 +59,8 @@ void translateModelToCenter(Model* model);
 
 void scaleModel(Model* model);
 
+void scaleModelXYZ(Model* model, float x, float y, float z);
+
 void drawModel(Model* model);
 
 void translateModel(Model* model, float x, float y, float z);

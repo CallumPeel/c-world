@@ -4,11 +4,13 @@
 float startTime, prevTime;
 static float days = 0.f, hrs = 0.f;
 static float timeScale = 3600.f;  // 1s in reallife corresponds to 1hr in simulation
-Model** models;
+
 int numOfModels;
 Model* model1;
 Model* model2;
 Model* sceneFloor;
+Model* models[3];
+
 float deltaAngle = 0.0f;
 float xAngle = 0;
 float yAngle = 0;
@@ -18,9 +20,9 @@ float sunRot = 0;
 float myGravity = 0.001f;
 
 static float viewer[] = {
-	0.0, 0.0, 1.0,  // location
-	0.0, 0.0, 0,	// look at point
-	0.0, 1.0, 0.0
+	0.0, 1.0, 1.0,  // location
+	0.0, 1.0, 0.0,	// look at point
+	0.0, 2.0, 0.0
 };
 
 enum {
@@ -30,37 +32,38 @@ enum {
 void drawOrigin() {
 	point3 origin[4] =
 	{
-		{0,-1,0},
-		{1,-1,0},
 		{0,0,0},
-		{0,-1,1}
+		{1,0,0},
+		{0,1,0},
+		{0,0,1}
 	};
-	glColor3f(1.0, 0.0, 0.0);
+	glColor3f(1.0f, 0.0f, 0.0f);
 	glLineWidth(2.0);
 	glBegin(GL_LINE_LOOP);
 	glVertex3fv(origin[0]);
 	glVertex3fv(origin[1]);
 	glEnd();
-	glColor3f(0.0, 1.0, 0.0);
+	glColor3f(0.0f, 1.0f, 0.0f);
 	glBegin(GL_LINE_LOOP);
 	glVertex3fv(origin[0]);
 	glVertex3fv(origin[2]);
 	glEnd();
-	glColor3f(0.0, 0.0, 1.0);
+	glColor3f(0.0f, 0.0f, 1.0f);
 	glBegin(GL_LINE_LOOP);
 	glVertex3fv(origin[0]);
 	glVertex3fv(origin[3]);
 	glEnd();
-	glColor3f(1.0, 0.0, 0.0);
-	glLineWidth(5.0);
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glLineWidth(5.0f);
 
 }
 
-bool isCollidingForTwo(Model* model1, Model* model2) {
-	return
-		(model1->boundingBox.minX < model2->boundingBox.maxX&& model1->boundingBox.maxX > model2->boundingBox.minX) &&
-		(model1->boundingBox.minY < model2->boundingBox.maxY&& model1->boundingBox.maxY > model2->boundingBox.minY) &&
-		(model1->boundingBox.minZ < model2->boundingBox.maxZ&& model1->boundingBox.maxZ > model2->boundingBox.minZ);
+bool isCollidingForTwo(Model* modela, Model* modelb) {
+	bool xco = (modela->boundingBox.minX <= modelb->boundingBox.maxX && modela->boundingBox.maxX >= modelb->boundingBox.minX);
+	bool yco = (modela->boundingBox.minY <= modelb->boundingBox.maxY && modela->boundingBox.maxY >= modelb->boundingBox.minY);
+	bool zco = (modela->boundingBox.minZ <= modelb->boundingBox.maxZ && modela->boundingBox.maxZ >= modelb->boundingBox.minZ);
+	return (xco && yco && zco);
+		
 }
 bool isColliding(Model* model, int nModels) {
 	bool isColliding = false;
@@ -91,11 +94,16 @@ bool isColliding(Model* model, int nModels) {
 void gravity() {
 	for (int i = 1; i < numOfModels; i++) {
 		models[i]->velocity.y -= myGravity;
-		if (isCollidingForTwo(models[i], models[0]) && models[i]->velocity.y > 0) {
-			models[i]->velocity.y * -1;
+		//if (isCollidingForTwo(models[i], models[0]) && models[i]->velocity.y > 0) {
+		//	models[i]->velocity.y * -1;
+		//}
+		 //if model hits ground and has no velocity then stop gravity?
+		if (models[i]->boundingBox.minY <= 0) {
+			printf("under\n");
 		}
-		// if model hits ground and has no velocity then stop gravity?
-		if (models[i]->boundingBox.minY <= -1 && models[i]->velocity.y <= 0) {
+		bool iscol = isCollidingForTwo(models[i], sceneFloor);
+		bool hasVelocity = models[i]->velocity.y <= 0;
+		if (iscol && hasVelocity) {
 			models[i]->velocity.y = 0;
 		}
 	}
@@ -127,17 +135,23 @@ void animate() {
 void init(void) {
 	const char* fileName = "bone.off";
 	numOfModels = 3;
-	models = malloc(sizeof(Model)*numOfModels);
+	for (int i = 0; i < numOfModels; i++) {
+		models[i] = malloc(sizeof(Model));
+	}
 	sceneFloor = readOFFFile("floor.off");
 	model1 = readOFFFile(fileName);
-	model2 = readOFFFile(fileName);
+	model2= readOFFFile(fileName);
+
 	models[0] = sceneFloor;
 	models[1] = model1;
 	models[2] = model2;
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
-	translateModel(model1, -0.8f, 0, -10);
-	translateModel(model2, 0.8f, 0, -10);
+	translateModel(model1, -0.8f, 3, -10);
+	translateModel(model2, 0.8f, 3, -10);
+	scaleModelXYZ(sceneFloor, 100.0f, 1.0, 100.0f);
+
 	glClearColor(0.0, 0.5, 0.5, 0.0);
 	glColor3f(1.0, 0.0, 0.0);
 	glLineWidth(2.0);
@@ -191,7 +205,6 @@ void scene(void) {
 	);
 	glPushMatrix();
 	drawOrigin();
-	glScalef(100.0f, 1.0, 100.0f);
 	glTranslated(0, -1, 0);
 	glColor3f(0.6f, 0.6f, 0.6f);
 	drawModel(sceneFloor);

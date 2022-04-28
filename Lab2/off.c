@@ -208,6 +208,26 @@ void scaleModel(Model* model) {
     model->boundingBox.maxZ * ratio;
 }
 
+void scaleModelXYZ(Model* model, float x, float y, float z) {
+    float radius = getRadiusOfModel(*model);
+
+    float xRatio = x / radius;
+    float yRatio = y / radius;
+    float zRatio = z / radius;
+
+    for (int i = 0; i < model->NVerts; i++) {
+        model->vertices[i].x = model->vertices[i].x * xRatio;
+        model->vertices[i].y = model->vertices[i].y * yRatio;
+        model->vertices[i].z = model->vertices[i].z * zRatio;
+    }
+    model->boundingBox.minX = model->boundingBox.minX* xRatio;
+    model->boundingBox.maxX = model->boundingBox.maxX* xRatio;
+    model->boundingBox.minY = model->boundingBox.minY* yRatio;
+    model->boundingBox.maxY = model->boundingBox.maxY* yRatio;
+    model->boundingBox.minZ = model->boundingBox.minZ* zRatio;
+    model->boundingBox.maxZ = model->boundingBox.maxZ* zRatio;
+}
+
 void drawBoundingBox(Model model) {
     glLineWidth(0.1);
     // Front Face
