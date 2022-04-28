@@ -1,28 +1,11 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(513,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (Lab5.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   scene.c
-C:\Repositories\c-world\Lab2\scene.c(88,22): warning C4552: '*': result of expression not used
-C:\Repositories\c-world\Lab2\scene.c(69,1): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Repositories\c-world\Lab2\scene.c(103,29): warning C4305: 'function': truncation from 'double' to 'float'
-C:\Repositories\c-world\Lab2\scene.c(104,28): warning C4305: 'function': truncation from 'double' to 'float'
-C:\Repositories\c-world\Lab2\scene.c(167,15): warning C4305: 'function': truncation from 'double' to 'GLfloat'
-C:\Repositories\c-world\Lab2\scene.c(167,20): warning C4305: 'function': truncation from 'double' to 'GLfloat'
-C:\Repositories\c-world\Lab2\scene.c(167,25): warning C4305: 'function': truncation from 'double' to 'GLfloat'
-C:\Repositories\c-world\Lab2\scene.c(177,23): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Repositories\c-world\Lab2\scene.c(181,18): warning C4305: 'function': truncation from 'double' to 'GLfloat'
-C:\Repositories\c-world\Lab2\scene.c(191,52): warning C4244: 'function': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Repositories\c-world\Lab2\scene.c(192,52): warning C4244: 'function': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Repositories\c-world\Lab2\scene.c(199,20): warning C4305: 'function': truncation from 'double' to 'GLfloat'
-C:\Repositories\c-world\Lab2\scene.c(180,1): warning C4305: 'initializing': truncation from 'double' to 'float'
-C:\Repositories\c-world\Lab2\scene.c(272,31): warning C4305: 'function': truncation from 'double' to 'float'
-C:\Repositories\c-world\Lab2\scene.c(276,30): warning C4305: 'function': truncation from 'double' to 'float'
-C:\Repositories\c-world\Lab2\scene.c(280,33): warning C4305: 'function': truncation from 'double' to 'float'
-C:\Repositories\c-world\Lab2\scene.c(284,34): warning C4305: 'function': truncation from 'double' to 'float'
-C:\Repositories\c-world\Lab2\scene.c(287,36): warning C4305: 'function': truncation from 'double' to 'float'
-C:\Repositories\c-world\Lab2\scene.c(290,37): warning C4305: 'function': truncation from 'double' to 'float'
-C:\Repositories\c-world\Lab2\scene.c(293,29): warning C4305: '+=': truncation from 'double' to 'GLfloat'
-C:\Repositories\c-world\Lab2\scene.c(229,9): warning C4101: 'sideDirection': unreferenced local variable
-C:\Repositories\c-world\Lab2\scene.c(302,30): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
-C:\Repositories\c-world\Lab2\scene.c(309,54): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Repositories\c-world\Lab2\scene.c(310,55): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Repositories\c-world\Lab2\scene.c(306,1): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Repositories\c-world\Lab2\scene.c(108,1): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Repositories\c-world\Lab2\scene.c(206,23): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Repositories\c-world\Lab2\scene.c(210,18): warning C4305: 'function': truncation from 'double' to 'GLfloat'
+C:\Repositories\c-world\Lab2\scene.c(220,52): warning C4244: 'function': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Repositories\c-world\Lab2\scene.c(221,52): warning C4244: 'function': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Repositories\c-world\Lab2\scene.c(258,9): warning C4101: 'sideDirection': unreferenced local variable
+C:\Repositories\c-world\Lab2\scene.c(338,54): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Repositories\c-world\Lab2\scene.c(339,55): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   Lab2.vcxproj -> C:\Repositories\c-world\x64\Debug\Ass1-289.exe

@@ -7,7 +7,11 @@ void animate();
 
 void init(void);
 
-bool isColliding();
+bool isCollidingForTwo(Model* model1, Model* model2);
+
+bool isColliding(Model* model, int nModels);
+
+void gravity();
 
 void scene(void);
 

@@ -4,8 +4,8 @@
 float startTime, prevTime;
 static float days = 0.f, hrs = 0.f;
 static float timeScale = 3600.f;  // 1s in reallife corresponds to 1hr in simulation
-
-
+Model** models;
+int numOfModels;
 Model* model1;
 Model* model2;
 Model* sceneFloor;
@@ -56,14 +56,53 @@ void drawOrigin() {
 
 }
 
-void gravity(Model* model) {
-	model->velocity.y -= myGravity;
+bool isCollidingForTwo(Model* model1, Model* model2) {
+	return
+		(model1->boundingBox.minX < model2->boundingBox.maxX&& model1->boundingBox.maxX > model2->boundingBox.minX) &&
+		(model1->boundingBox.minY < model2->boundingBox.maxY&& model1->boundingBox.maxY > model2->boundingBox.minY) &&
+		(model1->boundingBox.minZ < model2->boundingBox.maxZ&& model1->boundingBox.maxZ > model2->boundingBox.minZ);
+}
+bool isColliding(Model* model, int nModels) {
+	bool isColliding = false;
+	for (int i = 0; i < nModels; i++) {
+		if (
+			(model->boundingBox.minX < models[i]->boundingBox.maxX && model->boundingBox.maxX > models[i]->boundingBox.minX) &&
+			(model->boundingBox.minY < models[i]->boundingBox.maxY && model->boundingBox.maxY > models[i]->boundingBox.minY) &&
+			(model->boundingBox.minZ < models[i]->boundingBox.maxZ && model->boundingBox.maxZ > models[i]->boundingBox.minZ)
+			) {
+			isColliding = true;
+			break;
+		}
+	}
+	return isColliding;
+}
+
+//void gravity(Model* model) {
+//	model->velocity.y -= myGravity;
+//	if (isCollidingForTwo(model, models[0]) && model->velocity.y > 0) {
+//		model->velocity.y * -1;
+//	}
+//	// if model hits ground and has no velocity then stop gravity?
+//	if (model->boundingBox.minY <= -1 && model->velocity.y <= 0) {
+//		model->velocity.y = 0;
+//	}
+//}
+
+void gravity() {
+	for (int i = 1; i < numOfModels; i++) {
+		models[i]->velocity.y -= myGravity;
+		if (isCollidingForTwo(models[i], models[0]) && models[i]->velocity.y > 0) {
+			models[i]->velocity.y * -1;
+		}
+		// if model hits ground and has no velocity then stop gravity?
+		if (models[i]->boundingBox.minY <= -1 && models[i]->velocity.y <= 0) {
+			models[i]->velocity.y = 0;
+		}
+	}
 }
 
 void animate() {
-
 	printf("%.2f\n", model1->velocity.y);
-
 
 	// 1. Get the elapsed time in seconds
 	float currTime = glutGet(GLUT_ELAPSED_TIME) / 1000.0;
@@ -79,28 +118,26 @@ void animate() {
 	while (days > 365)
 		days = days - 365;
 
-	gravity(model1);
+	gravity();
+
 	// 3. Make sure you save the current time to use it in the next call to this function
 	prevTime = currTime;
-	// if model hits ground and still has velocity, flip velocity and apply gravity
-	if (model1->boundingBox.minY <= -1 && model1->velocity.y > 0) {
-		model1->velocity.y * -1;
-	}
-	// if model hits ground and has no velocity then stop gravity?
-	if (model1->boundingBox.minY <= -1 && model1->velocity.y <= 0) {
-		model1->velocity.y = 0;
-	}
 }
 
 void init(void) {
 	const char* fileName = "bone.off";
+	numOfModels = 3;
+	models = malloc(sizeof(Model)*numOfModels);
+	sceneFloor = readOFFFile("floor.off");
 	model1 = readOFFFile(fileName);
 	model2 = readOFFFile(fileName);
-	sceneFloor = readOFFFile("floor.off");
+	models[0] = sceneFloor;
+	models[1] = model1;
+	models[2] = model2;
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
-	translateModel(model1, -0.8, 0, -10);
-	translateModel(model2, 0.8, 0, -10);
+	translateModel(model1, -0.8f, 0, -10);
+	translateModel(model2, 0.8f, 0, -10);
 	glClearColor(0.0, 0.5, 0.5, 0.0);
 	glColor3f(1.0, 0.0, 0.0);
 	glLineWidth(2.0);
@@ -142,13 +179,6 @@ void init(void) {
 	//glutTimerFunc(TIMERMSECS, animate, 0);
 }
 
-bool isColliding() {
-	return
-		(model1->boundingBox.minX < model2->boundingBox.maxX&& model1->boundingBox.maxX > model2->boundingBox.minX) &&
-		(model1->boundingBox.minY < model2->boundingBox.maxY&& model1->boundingBox.maxY > model2->boundingBox.minY) &&
-		(model1->boundingBox.minZ < model2->boundingBox.maxZ&& model1->boundingBox.maxZ > model2->boundingBox.minZ);
-}
-
 void scene(void) {
 	animate();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -161,9 +191,9 @@ void scene(void) {
 	);
 	glPushMatrix();
 	drawOrigin();
-	glScaled(100.0, 1.0, 100.0);
+	glScalef(100.0f, 1.0, 100.0f);
 	glTranslated(0, -1, 0);
-	glColor3f(0.6, 0.6, 0.6);
+	glColor3f(0.6f, 0.6f, 0.6f);
 	drawModel(sceneFloor);
 	glPopMatrix();
 
@@ -176,7 +206,7 @@ void scene(void) {
 	sunRot = sunRot + 0.1;
 	int numOfCirclePoints = 100;
 	float radiusOfSun = 3;
-	float twoPi = 3.14159 * 2;
+	float twoPi = 3.14159f * 2;
 	glColor3f(1, 0.8, 0.0);
 	glLineWidth(2.0);
 	glBegin(GL_POLYGON);
@@ -195,8 +225,8 @@ void scene(void) {
 	glEnd();
 	glPopMatrix();
 
-	glColor3f(0.0, 0.9, 0.0);
-	if (!isColliding()) {
+	glColor3f(0.0, 0.9f, 0.0);
+	if (!isCollidingForTwo(model1, model2)) {
 		glColor3f(0.0, 0.0, 1.0);
 		drawModel(model1);
 		glColor3f(1.0, 0.0, 0.0);
@@ -268,28 +298,28 @@ void keys(unsigned char key, int x, int y)
 		// model movements
 			// Left
 	case 'g':
-		translateModel(model1, -0.03, 0, 0);
+		translateModel(model1, -0.03f, 0, 0);
 		break;
 		// Right
 	case 'h':
-		translateModel(model1, 0.03, 0, 0);
+		translateModel(model1, 0.03f, 0, 0);
 		break;
 		// Up
 	case 't':
-		translateModel(model1, 0, 0.03, 0);
+		translateModel(model1, 0, 0.03f, 0);
 		break;
 		// Down
 	case 'y':
-		translateModel(model1, 0, -0.03, 0);
+		translateModel(model1, 0, -0.03f, 0);
 		break;
 	case 'b':
-		translateModel(model1, 0, 0, 0.03);
+		translateModel(model1, 0, 0, 0.03f);
 		break;
 	case 'n':
-		translateModel(model1, 0, 0, -0.03);
+		translateModel(model1, 0, 0, -0.03f);
 		break;
 	case 'p':
-		model1->velocity.y += 0.05;
+		model1->velocity.y += 0.05f;
 		break;
 	}
 	if ((key == 'q') || (key == 'Q'))
@@ -298,11 +328,11 @@ void keys(unsigned char key, int x, int y)
 }
 
 float radians(float deg) {
-	return deg * 3.14159 / 180.0;
+	return deg * 3.14159f / 180.0f;
 }
 
 void mouseMove(int x, int y) {
-	float speed = 0.002;
+	float speed = 0.002f;
 	x -= 250;
 	xAngle += x;
 	zloc = viewer[2] + ((sin(radians(-xAngle))) * speed);

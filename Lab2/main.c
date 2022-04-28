@@ -15,10 +15,10 @@ int main(int argc, char** argv)
 	glutKeyboardFunc(keys);
 	glutSetCursor(GLUT_CURSOR_NONE);
 	glutWarpPointer(250, 250);
+	init();
 	glutTimerFunc(TIMERMSECS, animate, 0);
 	//glutIdleFunc(animate);
 	glutDisplayFunc(scene);
-	init();
 	glutMainLoop();
 	return 0;
 }
