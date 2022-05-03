@@ -14,6 +14,9 @@ float zloc = 0;
 float sunRot = 0;
 float myGravity = 0.002f;
 
+Point3D windRes = { 0.99, 0, 0 };
+Point3D windSpeed = { -0.0001, 0, 0 };
+
 static float viewer[] = {
 	0.0, 1.0, 1.0,  // location
 	0.0, 1.0, 0.0,	// look at point
@@ -92,9 +95,30 @@ void gravity() {
 	}
 }
 
+void wind() {
+	for (int i = 1; i < numOfModels; i++) {
+		if (models[i]->boundingBox.minY > 0) {
+			models[i]->velocity.x += windSpeed.x;
+		}
+	}
+}
+
+void windResistance() {
+	for (int i = 1; i < numOfModels; i++) {
+		if (models[i]->boundingBox.minY > 0 && models[i]->velocity.x > 0) {
+			models[i]->velocity.x *= windRes.x;
+		}
+		if (models[i]->velocity.y == 0) {
+			models[i]->velocity.x = 0;
+		}
+	}
+}
+
 void animate() {
 	printf("%.2f\n", model1->velocity.y);
 	gravity();
+	wind();
+	windResistance();
 }
 
 void init(void) {
@@ -111,9 +135,10 @@ void init(void) {
 	models[1] = model1;
 	models[2] = model2;
 
+	models[1]->velocity.x = 0.1;
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
-	translateModel(model1, -0.8f, 3, -10);
+	translateModel(model1, -0.8f, 5, -10);
 	translateModel(model2, 0.8f, 3, -10);
 	scaleModelXYZ(sceneFloor, 100.0f, 1.0, 100.0f);
 
@@ -295,6 +320,14 @@ void keys(unsigned char key, int x, int y)
 		break;
 	case 'p':
 		model1->velocity.y += 0.05f;
+		break;
+	case '[':
+		model1->velocity.y += 0.05f;
+		model1->velocity.x += 0.05f;
+		break;
+	case 'o':
+		model1->velocity.y += 0.05f;
+		model1->velocity.x -= 0.05f;
 		break;
 	}
 	if ((key == 'q') || (key == 'Q'))
