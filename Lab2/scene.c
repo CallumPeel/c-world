@@ -57,27 +57,27 @@ void drawOrigin() {
 }
 
 bool isCollidingForTwo(Model* modela, Model* modelb) {
-	bool xco = (modela->boundingBox.minX <= modelb->boundingBox.maxX && modela->boundingBox.maxX >= modelb->boundingBox.minX);
-	bool yco = (modela->boundingBox.minY <= modelb->boundingBox.maxY && modela->boundingBox.maxY >= modelb->boundingBox.minY);
-	bool zco = (modela->boundingBox.minZ <= modelb->boundingBox.maxZ && modela->boundingBox.maxZ >= modelb->boundingBox.minZ);
+	bool xco = (modela->boundingBox.minX + modela->position.x <= modelb->boundingBox.maxX + modelb->position.x && modela->boundingBox.maxX + modela->position.x >= modelb->boundingBox.minX + modelb->position.x);
+	bool yco = (modela->boundingBox.minY + modela->position.y <= modelb->boundingBox.maxY + modelb->position.y && modela->boundingBox.maxY + modela->position.y >= modelb->boundingBox.minY + modelb->position.y);
+	bool zco = (modela->boundingBox.minZ + modela->position.z <= modelb->boundingBox.maxZ + modelb->position.z && modela->boundingBox.maxZ + modela->position.z >= modelb->boundingBox.minZ + modelb->position.z);
 	return (xco && yco && zco);
 		
 }
 
-bool isColliding(Model* model, int nModels) {
-	bool isColliding = false;
-	for (int i = 0; i < nModels; i++) {
-		if (
-			(model->boundingBox.minX < models[i]->boundingBox.maxX && model->boundingBox.maxX > models[i]->boundingBox.minX) &&
-			(model->boundingBox.minY < models[i]->boundingBox.maxY && model->boundingBox.maxY > models[i]->boundingBox.minY) &&
-			(model->boundingBox.minZ < models[i]->boundingBox.maxZ && model->boundingBox.maxZ > models[i]->boundingBox.minZ)
-			) {
-			isColliding = true;
-			break;
-		}
-	}
-	return isColliding;
-}
+//bool isColliding(Model* model, int nModels) {
+//	bool isColliding = false;
+//	for (int i = 0; i < nModels; i++) {
+//		if (
+//			(model->boundingBox.minX < models[i]->boundingBox.maxX && model->boundingBox.maxX > models[i]->boundingBox.minX) &&
+//			(model->boundingBox.minY < models[i]->boundingBox.maxY && model->boundingBox.maxY > models[i]->boundingBox.minY) &&
+//			(model->boundingBox.minZ < models[i]->boundingBox.maxZ && model->boundingBox.maxZ > models[i]->boundingBox.minZ)
+//			) {
+//			isColliding = true;
+//			break;
+//		}
+//	}
+//	return isColliding;
+//}
 
 void gravity() {
 	for (int i = 1; i < numOfModels; i++) {
@@ -97,7 +97,7 @@ void gravity() {
 
 void wind() {
 	for (int i = 1; i < numOfModels; i++) {
-		if (models[i]->boundingBox.minY > 0) {
+		if (models[i]->position.y > 0) {
 			models[i]->velocity.x += windSpeed.x;
 		}
 	}
@@ -105,7 +105,7 @@ void wind() {
 
 void windResistance() {
 	for (int i = 1; i < numOfModels; i++) {
-		if (models[i]->boundingBox.minY > 0 && models[i]->velocity.x > 0) {
+		if (models[i]->position.y > 0 && models[i]->velocity.x > 0) {
 			models[i]->velocity.x *= windRes.x;
 		}
 		if (models[i]->velocity.y == 0) {
@@ -115,13 +115,24 @@ void windResistance() {
 }
 
 void animate() {
-	printf("%.2f\n", model1->velocity.y);
 	gravity();
 	wind();
 	windResistance();
+	for (int i = 1; i < numOfModels; i++) {
+		models[i]->position.x += models[i]->velocity.x;
+		models[i]->position.y += models[i]->velocity.y;
+		models[i]->position.z += models[i]->velocity.z;
+	}
 }
 
-void init(void) {
+void drawFloor() {
+	scaleModelXYZ(sceneFloor, 100.0f, 1.0, 100.0f);
+
+	glClearColor(0.0, 0.5, 0.5, 0.0);
+	glColor3f(1.0, 0.0, 0.0);
+}
+
+void setObjects() {
 	const char* fileName = "bone.off";
 	numOfModels = 3;
 	for (int i = 0; i < numOfModels; i++) {
@@ -129,22 +140,31 @@ void init(void) {
 	}
 	sceneFloor = readOFFFile("floor.off");
 	model1 = readOFFFile(fileName);
-	model2= readOFFFile(fileName);
+	model2 = readOFFFile(fileName);
 
 	models[0] = sceneFloor;
+
 	models[1] = model1;
+	models[1]->position.x += -2;
+	models[1]->position.y += 2;
+	models[1]->position.z += -10;
+
 	models[2] = model2;
+	models[2]->position.x += 2;
+	models[2]->position.y += 2;
+	models[2]->position.z += -10;
 
 	models[1]->velocity.x = 0.1;
+	drawFloor();
+}
+
+void init(void) {
+
+	setObjects();
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
-	translateModel(model1, -0.8f, 5, -10);
-	translateModel(model2, 0.8f, 3, -10);
-	scaleModelXYZ(sceneFloor, 100.0f, 1.0, 100.0f);
 
-	glClearColor(0.0, 0.5, 0.5, 0.0);
-	glColor3f(1.0, 0.0, 0.0);
-	glLineWidth(2.0);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	mode = PERSPECTIVE;
@@ -180,6 +200,63 @@ void init(void) {
 	}
 }
 
+void drawBlueBone() {
+	glPushMatrix();
+	glColor3f(0.0, 0.0, 1.0);
+	printf("%.2f\n", models[1]->position.y);
+	glTranslatef(models[1]->position.x, models[1]->position.y, models[1]->position.z);
+	drawModel(model1);
+	drawBoundingBox(*model1);
+	glPopMatrix();
+}
+
+void drawRedBone() {
+	glPushMatrix();
+	glColor3f(1.0, 0.0, 0.0);
+	glTranslatef(models[2]->position.x, models[2]->position.y, models[2]->position.z);
+	drawModel(model2);
+	drawBoundingBox(*model2);
+	glPopMatrix();
+}
+
+void setScene() {
+	glPushMatrix();
+		drawOrigin();
+		glTranslated(0, -1, 0);
+		glColor3f(0.6f, 0.6f, 0.6f);
+		drawModel(sceneFloor);
+	glPopMatrix();
+	// draw sun here
+	glPushMatrix();
+		// Translate world. Keeps sun relative to viewer.
+		glTranslated(viewer[0], viewer[1], viewer[2]);
+		// Rotate world.
+		glRotated(sunRot, 1, 0, 0);
+		sunRot = sunRot + 0.1;
+		int numOfCirclePoints = 100;
+		float radiusOfSun = 3;
+		float twoPi = 3.14159f * 2;
+		glColor3f(1, 0.8, 0.0);
+		glLineWidth(2.0);
+		glBegin(GL_POLYGON);
+		for (int i = 0; i < numOfCirclePoints; i++) {
+			glVertex3f(
+				// Take center of circle
+				// 2pi / number of points gives theta
+				// "i" marks which point in the circle
+				// cos gives x value in the sin function
+				// sin gives y value in the sin function
+				radiusOfSun * cos(i * twoPi / numOfCirclePoints),
+				radiusOfSun * sin(i * twoPi / numOfCirclePoints),
+				-100
+			);
+		}
+		glEnd();
+	glPopMatrix();
+	drawBlueBone();
+	drawRedBone();
+}
+
 void scene(void) {
 	animate();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -190,57 +267,7 @@ void scene(void) {
 		viewer[3], viewer[4], viewer[5],
 		viewer[6], viewer[7], viewer[8]
 	);
-	glPushMatrix();
-	drawOrigin();
-	glTranslated(0, -1, 0);
-	glColor3f(0.6f, 0.6f, 0.6f);
-	drawModel(sceneFloor);
-	glPopMatrix();
-
-	// draw sun here
-	glPushMatrix();
-	// Translate world. Keeps sun relative to viewer.
-	glTranslated(viewer[0], viewer[1], viewer[2]);
-	// Rotate world.
-	glRotated(sunRot,1,0,0);
-	sunRot = sunRot + 0.1;
-	int numOfCirclePoints = 100;
-	float radiusOfSun = 3;
-	float twoPi = 3.14159f * 2;
-	glColor3f(1, 0.8, 0.0);
-	glLineWidth(2.0);
-	glBegin(GL_POLYGON);
-	for (int i = 0; i < numOfCirclePoints; i++) {
-		glVertex3f(
-			// Take center of circle
-			// 2pi / number of points gives theta
-			// "i" marks which point in the circle
-			// cos gives x value in the sin function
-			// sin gives y value in the sin function
-			radiusOfSun * cos(i * twoPi / numOfCirclePoints),
-			radiusOfSun * sin(i * twoPi / numOfCirclePoints),
-			-100
-		);
-	}
-	glEnd();
-	glPopMatrix();
-
-	glColor3f(0.0, 0.9f, 0.0);
-	if (!isCollidingForTwo(model1, model2)) {
-		glColor3f(0.0, 0.0, 1.0);
-		drawModel(model1);
-		glColor3f(1.0, 0.0, 0.0);
-		drawModel(model2);
-	}
-	else {
-		glColor3f(0.0, 0.0, 0.0);
-		drawModel(model1);
-		glColor3f(0.0, 0.0, 0.0);
-		drawModel(model2);
-	}
-	drawBoundingBox(*model1);
-	drawBoundingBox(*model2);
-	glPopMatrix();
+	setScene();
 	glutSwapBuffers();
 }
 
@@ -295,29 +322,6 @@ void keys(unsigned char key, int x, int y)
 		viewer[5] += distZ * 250;
 		break;
 
-		// model movements
-			// Left
-	case 'g':
-		translateModel(model1, -0.03f, 0, 0);
-		break;
-		// Right
-	case 'h':
-		translateModel(model1, 0.03f, 0, 0);
-		break;
-		// Up
-	case 't':
-		translateModel(model1, 0, 0.03f, 0);
-		break;
-		// Down
-	case 'y':
-		translateModel(model1, 0, -0.03f, 0);
-		break;
-	case 'b':
-		translateModel(model1, 0, 0, 0.03f);
-		break;
-	case 'n':
-		translateModel(model1, 0, 0, -0.03f);
-		break;
 	case 'p':
 		model1->velocity.y += 0.05f;
 		break;

@@ -58,6 +58,11 @@ Model* getModel(FILE* file)
     velocity.y = 0;
     velocity.z = 0;
     model->velocity = velocity;
+    Point3D position;
+    position.x = 0;
+    position.y = 0;
+    position.z = 0;
+    model->position = position;
     return model;
 }
 
@@ -275,7 +280,7 @@ void drawBoundingBox(Model model) {
 }
 
 void drawModel(Model* model) {
-    translateModel(model, model->velocity.x, model->velocity.y, model->velocity.z);
+    //translateModel(model, model->velocity.x, model->velocity.y, model->velocity.z);
     for (int i = 0; i < model->NFaces; ++i) {
         glBegin(GL_TRIANGLES);
         glVertex3f(model->vertices[model->faces[i].i].x, model->vertices[model->faces[i].i].y, model->vertices[model->faces[i].i].z);
@@ -285,22 +290,23 @@ void drawModel(Model* model) {
     }
 }
 
-void translateModel(Model* model, float x, float y, float z) {
-    for (int i = 0; i < model->NVerts; i++) {
-        model->vertices[i].x = model->vertices[i].x + x;
-        model->vertices[i].y = model->vertices[i].y + y;
-        model->vertices[i].z = model->vertices[i].z + z;
-    }
-    model->boundingBox.minX += x;
-    model->boundingBox.maxX += x;
-    model->boundingBox.minY += y;
-    model->boundingBox.maxY += y;
-    model->boundingBox.minZ += z;
-    model->boundingBox.maxZ += z;
-    model->centre.x += x;
-    model->centre.y += y;
-    model->centre.z += z;
-}
+//void translateModel(Model* model, float x, float y, float z) {
+//    //for (int i = 0; i < model->NVerts; i++) {
+//    //    model->vertices[i].x = model->vertices[i].x + x;
+//    //    model->vertices[i].y = model->vertices[i].y + y;
+//    //    model->vertices[i].z = model->vertices[i].z + z;
+//    //}
+//
+//    model->boundingBox.minX += x;
+//    model->boundingBox.maxX += x;
+//    model->boundingBox.minY += y;
+//    model->boundingBox.maxY += y;
+//    model->boundingBox.minZ += z;
+//    model->boundingBox.maxZ += z;
+//    model->centre.x += x;
+//    model->centre.y += y;
+//    model->centre.z += z;
+////}
 
 BoundingBox getBoundingBox(Model model) {
     BoundingBox box = { 0,0,0,0,0,0 };

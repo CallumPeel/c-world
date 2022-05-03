@@ -24,6 +24,8 @@ typedef struct Model {
     BoundingBox boundingBox;
     Point3D centre;
     float radius;
+    Point3D position;
+    Point3D rotation;
     Point3D velocity;
 }Model;
 
@@ -63,7 +65,7 @@ void scaleModelXYZ(Model* model, float x, float y, float z);
 
 void drawModel(Model* model);
 
-void translateModel(Model* model, float x, float y, float z);
+//void translateModel(Model* model, float x, float y, float z);
 
 BoundingBox getBoundingBox(Model model);
 
