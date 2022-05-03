@@ -1,10 +1,5 @@
 #include "off.h"
 
-// The time in milliseconds between timer ticks
-float startTime, prevTime;
-static float days = 0.f, hrs = 0.f;
-static float timeScale = 3600.f;  // 1s in reallife corresponds to 1hr in simulation
-
 int numOfModels;
 Model* model1;
 Model* model2;
@@ -17,7 +12,7 @@ float yAngle = 0;
 float xloc = 0;
 float zloc = 0;
 float sunRot = 0;
-float myGravity = 0.001f;
+float myGravity = 0.002f;
 
 static float viewer[] = {
 	0.0, 1.0, 1.0,  // location
@@ -65,6 +60,7 @@ bool isCollidingForTwo(Model* modela, Model* modelb) {
 	return (xco && yco && zco);
 		
 }
+
 bool isColliding(Model* model, int nModels) {
 	bool isColliding = false;
 	for (int i = 0; i < nModels; i++) {
@@ -80,56 +76,25 @@ bool isColliding(Model* model, int nModels) {
 	return isColliding;
 }
 
-//void gravity(Model* model) {
-//	model->velocity.y -= myGravity;
-//	if (isCollidingForTwo(model, models[0]) && model->velocity.y > 0) {
-//		model->velocity.y * -1;
-//	}
-//	// if model hits ground and has no velocity then stop gravity?
-//	if (model->boundingBox.minY <= -1 && model->velocity.y <= 0) {
-//		model->velocity.y = 0;
-//	}
-//}
-
 void gravity() {
 	for (int i = 1; i < numOfModels; i++) {
 		models[i]->velocity.y -= myGravity;
-		//if (isCollidingForTwo(models[i], models[0]) && models[i]->velocity.y > 0) {
-		//	models[i]->velocity.y * -1;
-		//}
-		 //if model hits ground and has no velocity then stop gravity?
-		if (models[i]->boundingBox.minY <= 0) {
-			printf("under\n");
-		}
 		bool iscol = isCollidingForTwo(models[i], sceneFloor);
 		bool hasVelocity = models[i]->velocity.y <= 0;
 		if (iscol && hasVelocity) {
-			models[i]->velocity.y = 0;
+			if (sqrt(models[i]->velocity.y * models[i]->velocity.y) > 0.01) {
+			models[i]->velocity.y *= -0.7;
+			}
+			else {
+				models[i]->velocity.y = 0;
+			}
 		}
 	}
 }
 
 void animate() {
 	printf("%.2f\n", model1->velocity.y);
-
-	// 1. Get the elapsed time in seconds
-	float currTime = glutGet(GLUT_ELAPSED_TIME) / 1000.0;
-	float timeSincePrevFrame = currTime - prevTime;  // time elapsed since previous frame
-	// 2. Update the hrs
-	//    The division by 3600 is to convert time into hrs
-	hrs = hrs + (timeSincePrevFrame / 3600) * timeScale;
-	while (hrs > 24)
-		hrs = hrs - 24;
-	// 3. Update the days
-	//    The division by 3600 is to convert time into days
-	days = days + (timeSincePrevFrame / (3600 * 24)) * timeScale;
-	while (days > 365)
-		days = days - 365;
-
 	gravity();
-
-	// 3. Make sure you save the current time to use it in the next call to this function
-	prevTime = currTime;
 }
 
 void init(void) {
@@ -188,9 +153,6 @@ void init(void) {
 			bottom, top,
 			nearVal, farVal);
 	}
-	// Get the current time in seconds
-	prevTime = glutGet(GLUT_ELAPSED_TIME) / 1000.f;
-	//glutTimerFunc(TIMERMSECS, animate, 0);
 }
 
 void scene(void) {
