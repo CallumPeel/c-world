@@ -2,9 +2,14 @@
 #include "models.h"
 #define MY_GRAVITY 0.002f;
 
+int winx;
+int winy;
+
 void animate();
 
 void init(void);
+
+void reshape(int w, int h);
 
 bool isCollidingForTwo(Model* model1, Model* model2);
 

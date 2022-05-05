@@ -138,6 +138,20 @@ void init(void) {
 	setObjects();
 }
 
+void reshape(int w, int h)
+{
+	winx = w;
+	winy = h;
+
+	if (!h) h = 1;
+	double ratio = w * 1.0f / h;
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glViewport(0, 0, w, h);
+	gluPerspective(45.0, ratio, 0.01, 100);
+}
+
 void setScene() {
 	drawOrigin();
 	drawFloor(models[0]);
