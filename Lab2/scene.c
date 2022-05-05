@@ -132,26 +132,17 @@ void drawFloor() {
 void setObjects() {
 	const char* fileName = "bone.off";
 	numOfModels = 3;
-	for (int i = 0; i < numOfModels; i++) {
-		models[i] = malloc(sizeof(Model));
-	}
-	//sceneFloor = readOFFFile("floor.off");
-	//model1 = readOFFFile(fileName);
-	//model2 = readOFFFile(fileName);
-
+	*models = malloc(sizeof(Model)*numOfModels);
 	models[0] = readOFFFile("floor.off");
-
 	models[1] = readOFFFile(fileName);
 	models[1]->position.x += -2;
 	models[1]->position.y += 2;
 	models[1]->position.z += -10;
-
+	models[1]->velocity.x = 0.1;
 	models[2] = readOFFFile(fileName);
 	models[2]->position.x += 2;
 	models[2]->position.y += 2;
 	models[2]->position.z += -10;
-
-	models[1]->velocity.x = 0.1;
 	drawFloor();
 }
 
