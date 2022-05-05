@@ -3,13 +3,13 @@
 int numOfModels;
 Model* models[3];
 
-float deltaAngle = 0.0f;
-float xAngle = 0;
+// for mouse
+float lookRot = 0;
 float yAngle = 0;
-float xloc = 0;
-float zloc = 0;
+float lookAtLocX = 0;
+float lookAtLocZ = 0;
+
 float sunRot = 0;
-float myGravity = 0.002f;
 
 Point3D windRes = { 0.99, 0, 0 };
 Point3D windSpeed = { -0.0001, 0, 0 };
@@ -34,7 +34,7 @@ bool isCollidingForTwo(Model* modela, Model* modelb) {
 
 void gravity() {
 	for (int i = 1; i < numOfModels; i++) {
-		models[i]->velocity.y -= myGravity;
+		models[i]->velocity.y -= MY_GRAVITY;
 		bool iscol = isCollidingForTwo(models[i], models[0]);
 		bool hasVelocity = models[i]->velocity.y <= 0;
 		if (iscol && hasVelocity) {
@@ -173,17 +173,6 @@ void scene(void) {
 
 void keys(unsigned char key, int x, int y)
 {
-	float distX = viewer[0] - viewer[3];
-	float distZ = viewer[2] - viewer[5];
-
-	Point3D cameraLoc = { viewer[0], viewer[1], viewer[2] };
-	Point3D cameraUpLoc = { viewer[0]+viewer[6], viewer[1]+viewer[7], viewer[2]+viewer[8] };
-	Point3D lookatPoint = { viewer[3], viewer[4], viewer[5] };
-
-	Point3D upVector = getVector(cameraLoc, cameraUpLoc);
-	Point3D lookatVector = getVector(cameraLoc, lookatPoint);
-	Normal sideDirection = getUnitNormal(cameraLoc, upVector, lookatVector);
-
 	float dx = (viewer[3] - viewer[0]) * 400;
 	float dz = (viewer[5] - viewer[2]) * 400;
 
@@ -208,20 +197,21 @@ void keys(unsigned char key, int x, int y)
 		// forward
 	case 'w':
 	case 'W':
-		viewer[0] -= distX * 250;
-		viewer[2] -= distZ * 250;
-		viewer[3] -= distX * 250;
-		viewer[5] -= distZ * 250;
+		viewer[0] += dx;
+		viewer[2] += dz;
+		viewer[3] += dx;
+		viewer[5] += dz;
 		break;
 		// back
 	case 's':
 	case 'S':
-		viewer[0] += distX * 250;
-		viewer[2] += distZ * 250;
-		viewer[3] += distX * 250;
-		viewer[5] += distZ * 250;
+		viewer[0] -= dx;
+		viewer[2] -= dz;
+		viewer[3] -= dx;
+		viewer[5] -= dz;
 		break;
 
+		// Give blue bone velocity
 	case 'p':
 		models[1]->velocity.y += 0.05f;
 		break;
@@ -241,14 +231,11 @@ void keys(unsigned char key, int x, int y)
 
 void mouseMove(int x, int y) {
 	float speed = 0.002f;
-	x -= 250;
-	xAngle += x;
-	zloc = viewer[2] + ((sin(radians(-xAngle))) * speed);
-	xloc = viewer[0] + ((-cos(radians(-xAngle))) * speed);
-
-	viewer[3] = xloc;
-	viewer[5] = zloc;
-
+	lookRot += x - 250;
+	lookAtLocX = viewer[0] + ((-cos(radians(-lookRot))) * speed);
+	lookAtLocZ = viewer[2] + ((sin(radians(-lookRot))) * speed);
+	viewer[3] = lookAtLocX;
+	viewer[5] = lookAtLocZ;
 	glutWarpPointer(250, 250);
 	glutPostRedisplay();
 }

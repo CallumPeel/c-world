@@ -1,5 +1,6 @@
 #include "off.h"
 #include "models.h"
+#define MY_GRAVITY 0.002f;
 
 void animate();
 
