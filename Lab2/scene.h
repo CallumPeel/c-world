@@ -1,17 +1,11 @@
-#pragma once
 #include "off.h"
-
-void drawOrigin();
-
-void drawBone();
+#include "models.h"
 
 void animate();
 
 void init(void);
 
 bool isCollidingForTwo(Model* model1, Model* model2);
-
-bool isColliding(Model* model, int nModels);
 
 void gravity();
 

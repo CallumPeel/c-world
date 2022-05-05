@@ -60,3 +60,7 @@ Normal getUnitNormal(Point3D a, Point3D b, Point3D c) {
     if (unitNormal.k != 0) unitNormal.k /= mag;
     return unitNormal;
 }
+
+float radians(float deg) {
+    return deg * 3.14159f / 180.0f;
+}

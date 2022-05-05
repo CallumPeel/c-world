@@ -1,4 +1,4 @@
-#include "off.h"
+#include "scene.h"
 
 int numOfModels;
 Model* models[3];
@@ -24,35 +24,6 @@ enum {
 	ORTHO2D, PERSPECTIVE, FRUSTUM, ORTHO
 } mode = ORTHO;
 
-void drawOrigin() {
-	point3 origin[4] =
-	{
-		{0,0,0},
-		{1,0,0},
-		{0,1,0},
-		{0,0,1}
-	};
-	glColor3f(1.0f, 0.0f, 0.0f);
-	glLineWidth(2.0);
-	glBegin(GL_LINE_LOOP);
-	glVertex3fv(origin[0]);
-	glVertex3fv(origin[1]);
-	glEnd();
-	glColor3f(0.0f, 1.0f, 0.0f);
-	glBegin(GL_LINE_LOOP);
-	glVertex3fv(origin[0]);
-	glVertex3fv(origin[2]);
-	glEnd();
-	glColor3f(0.0f, 0.0f, 1.0f);
-	glBegin(GL_LINE_LOOP);
-	glVertex3fv(origin[0]);
-	glVertex3fv(origin[3]);
-	glEnd();
-	glColor3f(1.0f, 0.0f, 0.0f);
-	glLineWidth(5.0f);
-
-}
-
 bool isCollidingForTwo(Model* modela, Model* modelb) {
 	bool xco = (modela->boundingBox.minX + modela->position.x <= modelb->boundingBox.maxX + modelb->position.x && modela->boundingBox.maxX + modela->position.x >= modelb->boundingBox.minX + modelb->position.x);
 	bool yco = (modela->boundingBox.minY + modela->position.y <= modelb->boundingBox.maxY + modelb->position.y && modela->boundingBox.maxY + modela->position.y >= modelb->boundingBox.minY + modelb->position.y);
@@ -60,21 +31,6 @@ bool isCollidingForTwo(Model* modela, Model* modelb) {
 	return (xco && yco && zco);
 		
 }
-
-//bool isColliding(Model* model, int nModels) {
-//	bool isColliding = false;
-//	for (int i = 0; i < nModels; i++) {
-//		if (
-//			(model->boundingBox.minX < models[i]->boundingBox.maxX && model->boundingBox.maxX > models[i]->boundingBox.minX) &&
-//			(model->boundingBox.minY < models[i]->boundingBox.maxY && model->boundingBox.maxY > models[i]->boundingBox.minY) &&
-//			(model->boundingBox.minZ < models[i]->boundingBox.maxZ && model->boundingBox.maxZ > models[i]->boundingBox.minZ)
-//			) {
-//			isColliding = true;
-//			break;
-//		}
-//	}
-//	return isColliding;
-//}
 
 void gravity() {
 	for (int i = 1; i < numOfModels; i++) {
@@ -122,13 +78,6 @@ void animate() {
 	}
 }
 
-void drawFloor() {
-	scaleModelXYZ(models[0], 100.0f, 1.0, 100.0f);
-
-	glClearColor(0.0, 0.5, 0.5, 0.0);
-	glColor3f(1.0, 0.0, 0.0);
-}
-
 void setObjects() {
 	const char* fileName = "bone.off";
 	numOfModels = 3;
@@ -143,7 +92,6 @@ void setObjects() {
 	models[2]->position.x += 2;
 	models[2]->position.y += 2;
 	models[2]->position.z += -10;
-	drawFloor();
 }
 
 void setCamera() {
@@ -190,47 +138,9 @@ void init(void) {
 	setObjects();
 }
 
-void drawBone(int modelNumber) {
-	glPushMatrix();
-	printf("%.2f\n", models[modelNumber]->position.y);
-	glTranslatef(models[modelNumber]->position.x, models[modelNumber]->position.y, models[modelNumber]->position.z);
-	drawModel(models[modelNumber]);
-	drawBoundingBox(*models[modelNumber]);
-	glPopMatrix();
-}
-
-void drawSun() {
-	glPushMatrix();
-	// Translate world. Keeps sun relative to viewer.
-	glTranslated(viewer[0], viewer[1], viewer[2]);
-	// Rotate world.
-	glRotated(sunRot, 1, 0, 0);
-	sunRot = sunRot + 0.1;
-	int numOfCirclePoints = 100;
-	float radiusOfSun = 3;
-	float twoPi = 3.14159f * 2;
-	glColor3f(1, 0.8, 0.0);
-	glLineWidth(2.0);
-	glBegin(GL_POLYGON);
-	for (int i = 0; i < numOfCirclePoints; i++) {
-		glVertex3f(
-			// Take center of circle
-			// 2pi / number of points gives theta
-			// "i" marks which point in the circle
-			// cos gives x value in the sin function
-			// sin gives y value in the sin function
-			radiusOfSun * cos(i * twoPi / numOfCirclePoints),
-			radiusOfSun * sin(i * twoPi / numOfCirclePoints),
-			-100
-		);
-	}
-	glEnd();
-	glPopMatrix();
-}
-
 void setScene() {
-
 	drawOrigin();
+	drawFloor(models[0]);
 
 	glPushMatrix();
 		glTranslated(0, -1, 0);
@@ -238,13 +148,13 @@ void setScene() {
 		drawModel(models[0]);
 	glPopMatrix();
 	
-	drawSun();
+	drawSun(viewer[0], viewer[1], viewer[2], &sunRot);
 
 	glColor3f(0.0, 0.0, 1.0);
-	drawBone(1);
+	drawBone(models, 1);
 
 	glColor3f(1.0, 0.0, 0.0);
-	drawBone(2);
+	drawBone(models, 2);
 }
 
 void scene(void) {
@@ -327,10 +237,6 @@ void keys(unsigned char key, int x, int y)
 	if ((key == 'q') || (key == 'Q'))
 		exit(0);
 	glutPostRedisplay();
-}
-
-float radians(float deg) {
-	return deg * 3.14159f / 180.0f;
 }
 
 void mouseMove(int x, int y) {

@@ -28,3 +28,5 @@ Normal getNormalFromPoints3D(Point3D p1, Point3D p2, Point3D p3);
 Normal getUnitNormal(Point3D a, Point3D b, Point3D c);
 
 typedef GLfloat point3[3];
+
+float radians(float deg);

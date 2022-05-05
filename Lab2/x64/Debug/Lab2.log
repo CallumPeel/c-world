@@ -1,14 +1,13 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(513,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (Lab5.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  main.c
+C:\Repositories\c-world\Lab2\main.c(18,35): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'void (__cdecl *)(int)'
   scene.c
 C:\Repositories\c-world\Lab2\scene.c(14,32): warning C4305: 'initializing': truncation from 'double' to 'GLfloat'
 C:\Repositories\c-world\Lab2\scene.c(15,37): warning C4305: 'initializing': truncation from 'double' to 'GLfloat'
-C:\Repositories\c-world\Lab2\scene.c(86,33): warning C4305: '*=': truncation from 'double' to 'GLfloat'
-C:\Repositories\c-world\Lab2\scene.c(141,29): warning C4305: '=': truncation from 'double' to 'GLfloat'
-C:\Repositories\c-world\Lab2\scene.c(208,23): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Repositories\c-world\Lab2\scene.c(212,18): warning C4305: 'function': truncation from 'double' to 'GLfloat'
-C:\Repositories\c-world\Lab2\scene.c(222,52): warning C4244: 'function': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Repositories\c-world\Lab2\scene.c(223,52): warning C4244: 'function': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Repositories\c-world\Lab2\scene.c(275,9): warning C4101: 'sideDirection': unreferenced local variable
-C:\Repositories\c-world\Lab2\scene.c(340,54): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Repositories\c-world\Lab2\scene.c(341,55): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Repositories\c-world\Lab2\scene.c(42,33): warning C4305: '*=': truncation from 'double' to 'GLfloat'
+C:\Repositories\c-world\Lab2\scene.c(90,29): warning C4305: '=': truncation from 'double' to 'GLfloat'
+C:\Repositories\c-world\Lab2\scene.c(185,9): warning C4101: 'sideDirection': unreferenced local variable
+C:\Repositories\c-world\Lab2\scene.c(246,54): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Repositories\c-world\Lab2\scene.c(247,55): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  Generating Code...
   Lab2.vcxproj -> C:\Repositories\c-world\x64\Debug\Ass1-289.exe
