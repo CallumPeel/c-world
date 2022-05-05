@@ -3,6 +3,8 @@
 
 void drawOrigin();
 
+void drawBone();
+
 void animate();
 
 void init(void);

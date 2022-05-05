@@ -1,9 +1,6 @@
 #include "off.h"
 
 int numOfModels;
-Model* model1;
-Model* model2;
-Model* sceneFloor;
 Model* models[3];
 
 float deltaAngle = 0.0f;
@@ -82,7 +79,7 @@ bool isCollidingForTwo(Model* modela, Model* modelb) {
 void gravity() {
 	for (int i = 1; i < numOfModels; i++) {
 		models[i]->velocity.y -= myGravity;
-		bool iscol = isCollidingForTwo(models[i], sceneFloor);
+		bool iscol = isCollidingForTwo(models[i], models[0]);
 		bool hasVelocity = models[i]->velocity.y <= 0;
 		if (iscol && hasVelocity) {
 			if (sqrt(models[i]->velocity.y * models[i]->velocity.y) > 0.01) {
@@ -126,7 +123,7 @@ void animate() {
 }
 
 void drawFloor() {
-	scaleModelXYZ(sceneFloor, 100.0f, 1.0, 100.0f);
+	scaleModelXYZ(models[0], 100.0f, 1.0, 100.0f);
 
 	glClearColor(0.0, 0.5, 0.5, 0.0);
 	glColor3f(1.0, 0.0, 0.0);
@@ -138,18 +135,18 @@ void setObjects() {
 	for (int i = 0; i < numOfModels; i++) {
 		models[i] = malloc(sizeof(Model));
 	}
-	sceneFloor = readOFFFile("floor.off");
-	model1 = readOFFFile(fileName);
-	model2 = readOFFFile(fileName);
+	//sceneFloor = readOFFFile("floor.off");
+	//model1 = readOFFFile(fileName);
+	//model2 = readOFFFile(fileName);
 
-	models[0] = sceneFloor;
+	models[0] = readOFFFile("floor.off");
 
-	models[1] = model1;
+	models[1] = readOFFFile(fileName);
 	models[1]->position.x += -2;
 	models[1]->position.y += 2;
 	models[1]->position.z += -10;
 
-	models[2] = model2;
+	models[2] = readOFFFile(fileName);
 	models[2]->position.x += 2;
 	models[2]->position.y += 2;
 	models[2]->position.z += -10;
@@ -158,10 +155,7 @@ void setObjects() {
 	drawFloor();
 }
 
-void init(void) {
-
-	setObjects();
-
+void setCamera() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
 
@@ -200,61 +194,66 @@ void init(void) {
 	}
 }
 
-void drawBlueBone() {
+void init(void) {
+	setCamera();
+	setObjects();
+}
+
+void drawBone(int modelNumber) {
 	glPushMatrix();
-	glColor3f(0.0, 0.0, 1.0);
-	printf("%.2f\n", models[1]->position.y);
-	glTranslatef(models[1]->position.x, models[1]->position.y, models[1]->position.z);
-	drawModel(model1);
-	drawBoundingBox(*model1);
+	printf("%.2f\n", models[modelNumber]->position.y);
+	glTranslatef(models[modelNumber]->position.x, models[modelNumber]->position.y, models[modelNumber]->position.z);
+	drawModel(models[modelNumber]);
+	drawBoundingBox(*models[modelNumber]);
 	glPopMatrix();
 }
 
-void drawRedBone() {
+void drawSun() {
 	glPushMatrix();
-	glColor3f(1.0, 0.0, 0.0);
-	glTranslatef(models[2]->position.x, models[2]->position.y, models[2]->position.z);
-	drawModel(model2);
-	drawBoundingBox(*model2);
+	// Translate world. Keeps sun relative to viewer.
+	glTranslated(viewer[0], viewer[1], viewer[2]);
+	// Rotate world.
+	glRotated(sunRot, 1, 0, 0);
+	sunRot = sunRot + 0.1;
+	int numOfCirclePoints = 100;
+	float radiusOfSun = 3;
+	float twoPi = 3.14159f * 2;
+	glColor3f(1, 0.8, 0.0);
+	glLineWidth(2.0);
+	glBegin(GL_POLYGON);
+	for (int i = 0; i < numOfCirclePoints; i++) {
+		glVertex3f(
+			// Take center of circle
+			// 2pi / number of points gives theta
+			// "i" marks which point in the circle
+			// cos gives x value in the sin function
+			// sin gives y value in the sin function
+			radiusOfSun * cos(i * twoPi / numOfCirclePoints),
+			radiusOfSun * sin(i * twoPi / numOfCirclePoints),
+			-100
+		);
+	}
+	glEnd();
 	glPopMatrix();
 }
 
 void setScene() {
+
+	drawOrigin();
+
 	glPushMatrix();
-		drawOrigin();
 		glTranslated(0, -1, 0);
 		glColor3f(0.6f, 0.6f, 0.6f);
-		drawModel(sceneFloor);
+		drawModel(models[0]);
 	glPopMatrix();
-	// draw sun here
-	glPushMatrix();
-		// Translate world. Keeps sun relative to viewer.
-		glTranslated(viewer[0], viewer[1], viewer[2]);
-		// Rotate world.
-		glRotated(sunRot, 1, 0, 0);
-		sunRot = sunRot + 0.1;
-		int numOfCirclePoints = 100;
-		float radiusOfSun = 3;
-		float twoPi = 3.14159f * 2;
-		glColor3f(1, 0.8, 0.0);
-		glLineWidth(2.0);
-		glBegin(GL_POLYGON);
-		for (int i = 0; i < numOfCirclePoints; i++) {
-			glVertex3f(
-				// Take center of circle
-				// 2pi / number of points gives theta
-				// "i" marks which point in the circle
-				// cos gives x value in the sin function
-				// sin gives y value in the sin function
-				radiusOfSun * cos(i * twoPi / numOfCirclePoints),
-				radiusOfSun * sin(i * twoPi / numOfCirclePoints),
-				-100
-			);
-		}
-		glEnd();
-	glPopMatrix();
-	drawBlueBone();
-	drawRedBone();
+	
+	drawSun();
+
+	glColor3f(0.0, 0.0, 1.0);
+	drawBone(1);
+
+	glColor3f(1.0, 0.0, 0.0);
+	drawBone(2);
 }
 
 void scene(void) {
@@ -323,15 +322,15 @@ void keys(unsigned char key, int x, int y)
 		break;
 
 	case 'p':
-		model1->velocity.y += 0.05f;
+		models[1]->velocity.y += 0.05f;
 		break;
 	case '[':
-		model1->velocity.y += 0.05f;
-		model1->velocity.x += 0.05f;
+		models[1]->velocity.y += 0.05f;
+		models[1]->velocity.x += 0.05f;
 		break;
 	case 'o':
-		model1->velocity.y += 0.05f;
-		model1->velocity.x -= 0.05f;
+		models[1]->velocity.y += 0.05f;
+		models[1]->velocity.x -= 0.05f;
 		break;
 	}
 	if ((key == 'q') || (key == 'Q'))
