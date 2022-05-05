@@ -32,13 +32,15 @@ bool isCollidingForTwo(Model* modela, Model* modelb) {
 		
 }
 
-void gravity() {
+void gravity(float deltaTime) {
 	for (int i = 1; i < numOfModels; i++) {
-		models[i]->velocity.y -= MY_GRAVITY;
-		bool iscol = isCollidingForTwo(models[i], models[0]);
-		bool hasVelocity = models[i]->velocity.y <= 0;
-		if (iscol && hasVelocity) {
-			if (sqrt(models[i]->velocity.y * models[i]->velocity.y) > 0.01) {
+		models[i]->velocity.y += MY_GRAVITY * deltaTime;
+		float velocity = models[i]->velocity.y;
+		bool isCol = isCollidingForTwo(models[i], models[0]);
+		bool hasVelocity = velocity <= 0;
+
+		if (isCol && hasVelocity) {
+			if (sqrt(velocity * velocity) > 0.1) {
 			models[i]->velocity.y *= -0.7;
 			}
 			else {
@@ -67,8 +69,14 @@ void windResistance() {
 	}
 }
 
-void animate() {
-	gravity();
+void animate(int oldTime) {
+	glutPostRedisplay();
+
+	float time = glutGet(GLUT_ELAPSED_TIME);
+	float deltaTime = time - oldTime;
+	oldTime = time;
+
+	gravity(deltaTime/1000);
 	wind();
 	windResistance();
 	for (int i = 1; i < numOfModels; i++) {
@@ -76,6 +84,8 @@ void animate() {
 		models[i]->position.y += models[i]->velocity.y;
 		models[i]->position.z += models[i]->velocity.z;
 	}
+
+	glutTimerFunc(TIMERMSECS, animate, oldTime);
 }
 
 void setObjects() {
@@ -172,7 +182,6 @@ void setScene() {
 }
 
 void scene(void) {
-	animate();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();

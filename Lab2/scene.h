@@ -1,11 +1,13 @@
 #include "off.h"
 #include "models.h"
-#define MY_GRAVITY 0.002f;
+
+#define TIMERMSECS 16
+#define MY_GRAVITY -0.98f
 
 int winx;
 int winy;
 
-void animate();
+void animate(int oldTime);
 
 void init(void);
 
@@ -13,7 +15,7 @@ void reshape(int w, int h);
 
 bool isCollidingForTwo(Model* model1, Model* model2);
 
-void gravity();
+void gravity(float deltaTime);
 
 void scene(void);
 
