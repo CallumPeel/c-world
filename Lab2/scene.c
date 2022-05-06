@@ -28,8 +28,7 @@ bool isCollidingForTwo(Model* modela, Model* modelb) {
 	bool xco = (modela->boundingBox.minX + modela->position.x <= modelb->boundingBox.maxX + modelb->position.x && modela->boundingBox.maxX + modela->position.x >= modelb->boundingBox.minX + modelb->position.x);
 	bool yco = (modela->boundingBox.minY + modela->position.y <= modelb->boundingBox.maxY + modelb->position.y && modela->boundingBox.maxY + modela->position.y >= modelb->boundingBox.minY + modelb->position.y);
 	bool zco = (modela->boundingBox.minZ + modela->position.z <= modelb->boundingBox.maxZ + modelb->position.z && modela->boundingBox.maxZ + modela->position.z >= modelb->boundingBox.minZ + modelb->position.z);
-	return (xco && yco && zco);
-		
+	return (xco && yco && zco);		
 }
 
 void gravity(float deltaTime) {
@@ -236,15 +235,15 @@ void keys(unsigned char key, int x, int y)
 
 		// Give blue bone velocity
 	case 'p':
-		models[1]->velocity.y += 0.05f;
+		models[1]->velocity.y += 0.4f;
 		break;
 	case '[':
-		models[1]->velocity.y += 0.05f;
-		models[1]->velocity.x += 0.05f;
+		models[1]->velocity.y += 0.4f;
+		models[1]->velocity.x += 0.4f;
 		break;
 	case 'o':
-		models[1]->velocity.y += 0.05f;
-		models[1]->velocity.x -= 0.05f;
+		models[1]->velocity.y += 0.4f;
+		models[1]->velocity.x -= 0.4f;
 		break;
 	}
 	if ((key == 'q') || (key == 'Q'))
